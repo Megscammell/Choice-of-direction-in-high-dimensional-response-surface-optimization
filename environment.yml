@@ -1,0 +1,16 @@
+name: est_dir_env
+channels:
+  - defaults
+dependencies:
+  - python=3.8.5
+  - numpy==1.19.2
+  - pytest==6.2.1
+  - setuptools==49.2.1
+  - pip==20.2.4
+  - matplotlib==3.3.2
+  - pip:
+      - tqdm==4.50.2
+      - hypothesis==6.0.0
+      - pytest-cov==2.10.1
+      - scipy==1.5.2
+prefix: /Users/megsc/anaconda3/envs/est_dir_env
