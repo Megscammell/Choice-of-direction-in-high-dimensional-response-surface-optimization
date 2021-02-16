@@ -8,9 +8,8 @@ dependencies:
   - setuptools==49.2.1
   - pip==20.2.4
   - matplotlib==3.3.2
-  - pip:
-      - tqdm==4.50.2
-      - hypothesis==6.0.0
-      - pytest-cov==2.10.1
-      - scipy==1.5.2
+  - scipy==1.5.2
+  - pytest-cov==2.10.1
+  - hypothesis==6.0.0
+  - tqdm==4.50.2
 prefix: /Users/megsc/anaconda3/envs/est_dir_env

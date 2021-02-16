@@ -1,7 +1,7 @@
-import RSM_upd
+import est_dir
 
 
 def test_1():
     """Tests version number
     """
-    assert(RSM_upd.__version__ == "0.0.1")
+    assert(est_dir.__version__ == "0.0.1")

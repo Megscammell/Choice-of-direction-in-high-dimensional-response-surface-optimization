@@ -5,6 +5,7 @@ src/est_dir/armijo.py
 src/est_dir/calc_first_phase_RSM.py
 src/est_dir/calc_its_until_sc.py
 src/est_dir/create_design_matrix.py
+src/est_dir/num_exp_SNR.py
 src/est_dir/sphere_f.py
 src/est_dir/sphere_func_params.py
 src/est_dir/version.py
