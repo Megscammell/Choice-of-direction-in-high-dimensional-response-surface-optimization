@@ -9,8 +9,8 @@ def test_1():
     t = np.array([7.5, 9])
     A = np.array([[1, 0],
                   [0, 4]])
-    func_val = est_dir.sphere_f(x, t, A)
-    assert(func_val == 226.25)
+    func_val = est_dir.square_sphere_f(x, t, A)
+    assert(np.round(func_val, 4) == 51189.0625)
 
 
 @settings(max_examples=5, deadline=None)
@@ -23,5 +23,5 @@ def test_2(m):
     A = est_dir.sphere_func_params(min_eig, max_eig, m)
     mu = 0
     sd = 1
-    func_val = est_dir.sphere_f_noise(x, t, A, mu, sd)
+    func_val = est_dir.square_sphere_f_noise(x, t, A, mu, sd)
     assert(isinstance(func_val, float))
