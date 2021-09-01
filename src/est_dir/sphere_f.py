@@ -2,7 +2,7 @@ import numpy as np
 
 
 def sphere_f(x, a, matrix):
-    return (0.5 * ((x - a).T @ matrix @ (x - a)))
+    return ((x - a).T @ matrix @ (x - a))
 
 
 def sphere_f_noise(x, a, matrix, mu, sd):

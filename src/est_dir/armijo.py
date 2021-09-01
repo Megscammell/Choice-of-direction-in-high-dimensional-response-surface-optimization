@@ -9,11 +9,10 @@ def compute_forward(t, const_forward, forward_tol, track, centre_point, beta,
     any further.
     """
     count_func_evals = 0
-    temp_track = np.copy(track)
     while track[-2][1] > track[-1][1]:
         t = t * const_forward
         if t > forward_tol:
-            return temp_track, count_func_evals, False
+            return track, count_func_evals, False
         track = np.vstack((track, np.array([t, f(np.copy(centre_point) - t * beta, *func_args)])))
         count_func_evals += 1
     return track, count_func_evals, True
@@ -26,11 +25,11 @@ def forward_tracking(centre_point, t, f_old, f_new, beta, const_forward,
     Second part of forward_tracking() checks whether flag is False. That is, if
     the forward_tol is met in compute_forward(). If flag is False, outputs are 
     returned from forward_tracking(). Otherwise, if flag is True, it is checked
-    whether the response fuction can be improved further with t = t * const_forward.
+    whether the response fuction can be improved further by applying the two-in-a-row rule.
     If the response function can be improved, we replace the last entry in track which
     did not improve the response function value and replace with [t, f(centre_point
     - t * beta, *func_args)] and pass to compute_forward(). Otherwise if the response
-    function cannot be improved with t = t * const_forward, outputs from forward_tracking()
+    function cannot be improved with the two-in-a-row rule, outputs from forward_tracking()
     are returned.
     """
     assert(const_forward > 1)
@@ -44,45 +43,76 @@ def forward_tracking(centre_point, t, f_old, f_new, beta, const_forward,
     total_func_evals += count_func_evals
     if flag == False:
         return track, total_func_evals, flag
-    else:
+    while flag:
         t = np.copy(track[-1][0]) * const_forward
         f_new = f(np.copy(centre_point) - t * beta, *func_args)
         total_func_evals += 1
         if f_new < track[-2][1]:
-            temp_track = np.copy(track)
             track[-1] = np.array([t, f_new])
             track, count_func_evals, flag = compute_forward(t, const_forward, 
                                                             forward_tol, track,
                                                             centre_point, beta,
                                                             f, func_args)
             total_func_evals += count_func_evals
-            if flag == False:
-                return temp_track, total_func_evals, True
-            else:
-                return track, total_func_evals, True
         else:
-            return track, total_func_evals, True
+            return track, total_func_evals, flag
+    return track, total_func_evals, flag
+
+
+def compute_backward(t, const_back, back_tol, track, centre_point, beta, 
+                     f, func_args):
+    """
+    Decreases step size by a multiple of const_back (less than one) until
+    either back_tol is met or until the response function cannot be improved
+    any further.
+    """
+    count_func_evals = 0
+    while track[-2][1] > track[-1][1]:
+        t = t * const_back
+        if t < back_tol:
+            return track, count_func_evals, False 
+        track = np.vstack((track, np.array([t, f(np.copy(centre_point) - t * beta, *func_args)])))
+        count_func_evals  += 1
+    return track, count_func_evals, True
 
 
 def backward_tracking(centre_point, t, f_old, f_new, beta, const_back, 
                       back_tol, f, func_args):
     """
-    Decreases step size by a multiple of const_backward (less than one) until either
-    back_tol is met or until the response function value is smaller
-    than f(centrer_point, *func_args).
+    Decreases step size until the response function value at some step size t is less than
+    the response function value at the centre_point. The step size is decreased in order to 
+    find the best response function value possible. The two-in-a-row rule is used as the 
+    stopping criteria for the step size.
     """
     assert(const_back < 1)
-    count_func_evals = 0
+    total_func_evals = 0
     track = np.array([[0, f_old], [t, f_new]])
     temp_track = np.copy(track)
     while track[0][1] <= track[-1][1]:
         t = t * const_back
         if t < back_tol:
-            return temp_track, count_func_evals
+            return temp_track, total_func_evals
         else:
             track = np.vstack((track, np.array([t, f(np.copy(centre_point) - t * beta, *func_args)])))
-            count_func_evals += 1
-    return track, count_func_evals
+            total_func_evals += 1
+    
+    track, count_func_evals, flag = compute_backward(t, const_back, back_tol, track, centre_point, beta, 
+                                                     f, func_args)
+    total_func_evals += count_func_evals
+    if flag == False:
+        return track, total_func_evals
+    while flag:
+        t = np.copy(track[-1][0]) * const_back
+        f_new = f(np.copy(centre_point) - t * beta, *func_args)
+        total_func_evals += 1
+        if f_new < track[-2][1]:
+            track[-1] = np.array([t, f_new])
+            track, count_func_evals, flag = compute_backward(t, const_back, back_tol, track, centre_point, beta, 
+                                                             f, func_args)
+            total_func_evals += count_func_evals             
+        else:
+            return track, total_func_evals
+    return track, total_func_evals
 
 
 def compute_coeffs(track_y, track_t):
@@ -93,12 +123,14 @@ def compute_coeffs(track_y, track_t):
                                     ,np.array(track_t),
                                     np.array(track_t) ** 2)).T
     coeffs = (np.linalg.inv(design_matrix_step.T @ design_matrix_step) @ 
-              design_matrix_step.T @ track_y)
+              design_matrix_step.T @ track_y)   
     assert((-coeffs[1]/(2 * coeffs[2]) >= 0))
     return -coeffs[1]/(2 * coeffs[2])
+    # coeffs = np.polyfit(track_t, track_y, 2)
+    # assert((-coeffs[1]/(2 * coeffs[0]) >= 0))
+    # return -coeffs[1]/(2 * coeffs[0])
 
 
-# Only consider t = 0 for backward tracking.
 def arrange_track_y_t(track, track_method):
     """
     Dependent on track_method, select three step sizes where the plot of the response function values against the
@@ -107,23 +139,24 @@ def arrange_track_y_t(track, track_method):
     """    
     track_y = track[:, 1]
     track_t = track[:, 0]
-    if len(track_y) > 3:
-        if track_method == 'Backward':
-            min_pos = np.argmin(track_y)
-            prev_pos = min_pos - 1
-            track_y = np.array([track_y[0], track_y[min_pos], track_y[prev_pos]])
-            assert(track_t[min_pos] < track_t[prev_pos])
-            assert(track_t[min_pos] > track_t[0])
-            track_t = np.array([track_t[0], track_t[min_pos], track_t[prev_pos]])
-        else:
-            min_pos = np.argmin(track_y)
-            next_pos = np.argmin(track_y[min_pos:]) + (min_pos + 1)
-            prev_pos = np.argmin(track_y[:min_pos])
-            track_y = np.array([track_y[prev_pos], track_y[min_pos], track_y[next_pos]])
-            assert(track_t[min_pos] < track_t[next_pos])
-            assert(track_t[min_pos] > track_t[prev_pos])
-            track_t = np.array([track_t[prev_pos], track_t[min_pos], track_t[next_pos]])
-    return track_y, track_t
+    if track_method == 'Backward':
+        min_pos = np.argmin(track_y)
+        prev_pos = min_pos - 1
+        track_y = np.array([track_y[0], track_y[min_pos], track_y[prev_pos]])
+        track_t = np.array([track_t[0], track_t[min_pos], track_t[prev_pos]])
+        assert(track_t[0] < track_t[1] < track_t[2])
+        assert(track_y[0] > track_y[1])
+        assert(track_y[2] > track_y[1])
+        return track_y, track_t
+    else:
+        min_pos = np.argmin(track_y)
+        next_pos = (min_pos + 1)
+        track_y = np.array([track_y[0], track_y[min_pos], track_y[next_pos]])
+        track_t = np.array([track_t[0], track_t[min_pos], track_t[next_pos]])
+        assert(track_t[0] < track_t[1] < track_t[2])
+        assert(track_y[0] > track_y[1])
+        assert(track_y[2] > track_y[1])
+        return track_y, track_t
 
 
 def check_func_val_coeffs(track, track_method, centre_point, beta, f, 
