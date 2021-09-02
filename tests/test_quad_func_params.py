@@ -7,7 +7,11 @@ import est_dir
 @settings(max_examples=5, deadline=None)
 @given(st.integers(2, 100), st.integers(1, 10), st.integers(16, 100))
 def test_1(m, min_eig, max_eig):
-    mat = est_dir.sphere_func_params(min_eig, max_eig, m)
+    """
+    Series of tests for quad_func_params() to check oututs are of correct
+    form when max_eig != min_eig.
+    """
+    mat = est_dir.quad_func_params(min_eig, max_eig, m)
     assert(mat.shape == (m, m))
     for j in range(m):
         for i in range(m):
@@ -18,7 +22,11 @@ def test_1(m, min_eig, max_eig):
 @settings(max_examples=5, deadline=None)
 @given(st.integers(2, 500))
 def test_2(m, ):
+    """
+    Series of tests for quad_func_params() to check oututs are of correct
+    form when max_eig == min_eig.
+    """
     min_eig = 1
     max_eig = 1
-    A = est_dir.sphere_func_params(min_eig, max_eig, m)
+    A = est_dir.quad_func_params(min_eig, max_eig, m)
     assert(np.all(np.round(A, 3) == np.identity(m)))
