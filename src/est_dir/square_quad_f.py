@@ -12,7 +12,7 @@ def square_quad_f(x, a, matrix):
     minimizer : 1-D array
                 Minimizer of the square of the quadratic function.
     matrix : 2-D array
-             Positive definite matrix. 
+             Positive definite matrix.
     Returns
     -------
     func_val : float
@@ -35,7 +35,7 @@ def square_quad_f_noise(x, a, matrix, mu, sd):
     minimizer : 1-D array
                 Minimizer of the square of the quadratic function.
     matrix : 2-D array
-             Positive definite matrix. 
+             Positive definite matrix.
     mu : float
          Mean of the normal distribution, used to sample noise.
     sd : float

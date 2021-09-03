@@ -12,7 +12,7 @@ def sqrt_quad_f(x, a, matrix):
     minimizer : 1-D array
                 Minimizer of the square root of the quadratic function.
     matrix : 2-D array
-             Positive definite matrix. 
+             Positive definite matrix.
     Returns
     -------
     func_val : float
@@ -20,7 +20,7 @@ def sqrt_quad_f(x, a, matrix):
     """
 
     func_val = (np.sqrt((x - a).T @ matrix @ (x - a)))
-    return func_val 
+    return func_val
 
 
 def sqrt_quad_f_noise(x, a, matrix, mu, sd):
@@ -35,7 +35,7 @@ def sqrt_quad_f_noise(x, a, matrix, mu, sd):
     minimizer : 1-D array
                 Minimizer of the square root of the quadratic function.
     matrix : 2-D array
-             Positive definite matrix. 
+             Positive definite matrix.
     mu : float
          Mean of the normal distribution, used to sample noise.
     sd : float

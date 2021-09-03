@@ -408,7 +408,7 @@ def test_4():
                     m, num_funcs, lambda_max, cov, f_no_noise))
     assert(sp_func_vals.shape == (num_funcs, ))
     assert(np.all(sp_func_vals > 0))
-    noise_list = est_dir.compute_var_quad_form(m, snr_list, sp_func_vals,
+    noise_list = est_dir.compute_var_quad_form(snr_list, sp_func_vals,
                                                region)
     for k in range(noise_list.shape[0]):
         assert(np.all(np.round(np.var(sp_func_vals * region) /
@@ -423,7 +423,6 @@ def test_5():
     """
     f_no_noise = est_dir.quad_f
     m = 100
-    n = 16
     lambda_max = 1
     cov = np.identity(m)
     num_funcs = 100
@@ -433,7 +432,7 @@ def test_5():
                     m, num_funcs, lambda_max, cov, f_no_noise))
     assert(sp_func_vals.shape == (num_funcs, ))
     assert(np.all(sp_func_vals > 0))
-    noise_list = est_dir.compute_var_quad_form(m, snr_list, sp_func_vals,
+    noise_list = est_dir.compute_var_quad_form(snr_list, sp_func_vals,
                                                region)
     for k in range(noise_list.shape[0]):
         assert(np.all(np.round(np.var(sp_func_vals * region) /
@@ -460,7 +459,7 @@ def test_6():
     store_max_func_evals = None
     sp_func_vals = (est_dir.calc_initial_func_values(
                     m, num_funcs, lambda_max, cov, f_no_noise))
-    noise_list = est_dir.compute_var_quad_form(m, snr_list,
+    noise_list = est_dir.compute_var_quad_form(snr_list,
                                                sp_func_vals, region)
     est_dir.quad_LS_XY_MP(f, f_no_noise, n, m, num_funcs, lambda_max, cov,
                           noise_list, no_vars, region, function_type,
@@ -487,7 +486,7 @@ def test_7():
     store_max_func_evals = [1000, 1000, 2000, 2000]
     sp_func_vals = (est_dir.calc_initial_func_values(
                     m, num_funcs, lambda_max, cov, f_no_noise))
-    noise_list = est_dir.compute_var_quad_form(m, snr_list,
+    noise_list = est_dir.compute_var_quad_form(snr_list,
                                                sp_func_vals, region)
     est_dir.quad_LS_XY_MP(f, f_no_noise, n, m, num_funcs, lambda_max, cov,
                           noise_list, no_vars, region, function_type,

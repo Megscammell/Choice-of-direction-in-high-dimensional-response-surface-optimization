@@ -82,7 +82,6 @@ def test_3():
     Test for forward_tracking - flag=True and f_new >= track[-2][1]
     """
     np.random.seed(90)
-    n = 16
     m = 10
     f = est_dir.quad_f_noise
     const_back = 0.5
@@ -95,7 +94,6 @@ def test_3():
     forward_tol = 1000000
     no_vars = 10
     region = 1
-    const = 1
     beta, func_evals = est_dir.compute_direction_LS(m, centre_point, f,
                                                     func_args, no_vars,
                                                     region)
@@ -218,7 +216,6 @@ def test_7():
     Test for compute_backward - check that when flag=True, track is updated.
     """
     np.random.seed(90)
-    n = 16
     m = 100
     f = est_dir.quad_f_noise
     const_back = 0.5
@@ -230,7 +227,6 @@ def test_7():
     back_tol = 0.000001
     no_vars = 10
     region = 1
-    const = 1
     beta, func_evals = est_dir.compute_direction_LS(m, centre_point, f,
                                                     func_args, no_vars,
                                                     region)
@@ -262,7 +258,6 @@ def test_8():
     original track is returned.
     """
     np.random.seed(90)
-    n = 16
     m = 100
     f = est_dir.quad_f_noise
     const_back = 0.5
@@ -274,7 +269,6 @@ def test_8():
     back_tol = 0.075
     no_vars = 10
     region = 1
-    const = 1
     beta, func_evals = est_dir.compute_direction_LS(m, centre_point, f,
                                                     func_args, no_vars,
                                                     region)
@@ -620,18 +614,15 @@ def test_21():
 def test_22():
     """Test for check_func_val_coeffs when func_val > track_y[1]."""
     np.random.seed(90)
-    n = 20
     m = 10
     f = est_dir.quad_f_noise
     minimizer = np.ones((m,))
     centre_point = np.random.uniform(0, 20, (m, ))
     matrix = est_dir.quad_func_params(1, 10, m)
     func_args = (minimizer, matrix, 0, 60)
-    # step = 0.01
     step = 1.8251102718712913
     no_vars = 10
     region = 1
-    const = 1
     beta, func_evals = est_dir.compute_direction_LS(m, centre_point, f,
                                                     func_args,  no_vars,
                                                     region)
@@ -654,7 +645,6 @@ def test_22():
 def test_23():
     """Test for check_func_val_coeffs when func_val <= track_y[1]."""
     np.random.seed(91)
-    n = 20
     m = 10
     f = est_dir.quad_f_noise
     const_back = 0.5
@@ -667,7 +657,6 @@ def test_23():
     forward_tol = 1000000
     no_vars = 10
     region = 1
-    const = 1
     beta, func_evals = est_dir.compute_direction_LS(m, centre_point, f,
                                                     func_args, no_vars,
                                                     region)
@@ -683,7 +672,7 @@ def test_23():
     assert(total_func_evals > 0)
     track_method = 'Forward'
     upd_point, func_val = (est_dir.check_func_val_coeffs
-                                  (track, track_method, centre_point, beta, f,
-                                   func_args))
+                           (track, track_method, centre_point, beta, f,
+                            func_args))
     assert(upd_point.shape == (m, ))
     assert(np.all(func_val <= track[:, 1]))

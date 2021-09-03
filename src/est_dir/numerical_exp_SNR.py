@@ -91,7 +91,7 @@ def calc_initial_func_values(m, num_funcs, lambda_max, cov, f_no_noise):
     return sp_func_vals
 
 
-def compute_var_quad_form(m, snr_list, sp_func_vals, region):
+def compute_var_quad_form(snr_list, sp_func_vals, region):
     """
     Compute standard deviation of errors used to compute noisy function
     values.
