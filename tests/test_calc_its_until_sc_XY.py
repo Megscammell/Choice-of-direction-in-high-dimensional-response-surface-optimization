@@ -51,10 +51,7 @@ def test_1():
     assert(store_good_dir <= no_iterations)
     assert(len(store_good_dir_norm) == store_good_dir)
     assert(len(store_good_dir_func) == store_good_dir)
-    if np.all(np.round(upd_point, 5) == np.round(centre_point, 5)):
-        assert(f_val == init_func_val)
-    else:
-        assert(f_val < init_func_val)
+    assert(f_val < init_func_val)
 
 
 def test_2():
@@ -103,11 +100,7 @@ def test_2():
     assert(store_good_dir <= no_iterations)
     assert(len(store_good_dir_norm) == store_good_dir)
     assert(len(store_good_dir_func) == store_good_dir)
-
-    if np.all(np.round(upd_point, 5) == np.round(centre_point, 5)):
-        assert(f_val == init_func_val)
-    else:
-        assert(f_val < init_func_val)
+    assert(f_val < init_func_val)
 
 
 def test_3():
