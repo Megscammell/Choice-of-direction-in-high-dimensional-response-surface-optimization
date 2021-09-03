@@ -1,4 +1,14 @@
-- numpy>=1.18.1
+- numpy==1.19.2
+- pytest==6.2.1
+- setuptools==49.2.1
+- pip==20.2.4
+- matplotlib==3.3.2
+- scipy==1.5.2
+- pytest-cov==2.10.1
+- hypothesis==6.0.0
+- tqdm==4.50.2
+- statsmodels==0.12.0 
+- seaborn==0.11.0
 
 
 
