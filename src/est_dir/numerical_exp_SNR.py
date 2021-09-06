@@ -905,7 +905,7 @@ def quad_LS_XY_MP(f, f_no_noise, n, m, num_funcs, lambda_max, cov, noise_list,
                            a predefined number of function evaluations to
                            compute step length and direction before stopping.
     """
-    if store_max_func_evals == None:
+    if np.all(store_max_func_evals) == None:
         results_LS = num_exp_SNR_LS(f, f_no_noise, m, num_funcs, lambda_max,
                                     cov, noise_list, region, function_type)
         total_func_evals = results_LS[7] + results_LS[8]
