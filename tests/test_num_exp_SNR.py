@@ -137,10 +137,11 @@ def test_2():
     n = 16
     lambda_max = 1
     noise_list = np.array([1, 2])
-    max_func_evals_list = np.array([1000, 2000])
+    max_func_evals_list = np.array([2000, 2000])
     no_vars = m
     region = 0.1
     num_funcs = 5
+    store_max_func_evals = max_func_evals_list[0]
     cov = np.identity(m)
     (sp_norms, sp_func_vals,
      fp_norms, fp_func_vals,
@@ -154,7 +155,8 @@ def test_2():
                                               lambda_max, cov, noise_list,
                                               no_vars, region,
                                               max_func_evals_list,
-                                              function_type)
+                                              function_type,
+                                              store_max_func_evals)
 
     assert(np.all(sp_norms > 0))
     assert(np.all(sp_func_vals > 0))
@@ -269,7 +271,8 @@ def test_3():
     n = 16
     lambda_max = 1
     noise_list = np.array([1, 2])
-    max_func_evals_list = np.array([1000, 2000])
+    max_func_evals_list = np.array([2000, 2000])
+    store_max_func_evals = max_func_evals_list[0]
     no_vars = m
     region = 0.1
     num_funcs = 5
@@ -287,7 +290,8 @@ def test_3():
                                               lambda_max, cov, noise_list,
                                               no_vars, region,
                                               max_func_evals_list,
-                                              type_inverse, function_type)
+                                              type_inverse, function_type,
+                                              store_max_func_evals)
 
     assert(np.all(sp_norms > 0))
     assert(np.all(sp_func_vals > 0))

@@ -347,7 +347,8 @@ def num_exp_SNR_LS(f, f_no_noise, m, num_funcs, lambda_max, cov,
 
 
 def num_exp_SNR_XY(f, f_no_noise, n, m, num_funcs, lambda_max, cov, noise_list,
-                   no_vars, region, max_func_evals_list, function_type):
+                   no_vars, region, max_func_evals_list, function_type,
+                   store_max_func_evals):
     """
     Numerical experiments for XY - with various SNR.
 
@@ -509,65 +510,76 @@ def num_exp_SNR_XY(f, f_no_noise, n, m, num_funcs, lambda_max, cov, noise_list,
                 good_dir_func_XY[index_noise, j] = np.mean(store_good_dir_func)
 
     option_t = 'XY'
-    np.savetxt('sp_norms_%s_n=%s_m=%s_lambda_max=%s_%s.csv' %
-               (option_t, n, m, lambda_max, function_type),
+    np.savetxt('sp_norms_%s_n=%s_m=%s_lambda_max=%s_%s_%s.csv' %
+               (option_t, n, m, lambda_max, function_type,
+                store_max_func_evals),
                sp_norms_XY, delimiter=',')
-    np.savetxt('sp_func_vals_%s_n=%s_m=%s_lambda_max=%s_%s.csv' %
-               (option_t, n, m, lambda_max, function_type),
+    np.savetxt('sp_func_vals_%s_n=%s_m=%s_lambda_max=%s_%s_%s.csv' %
+               (option_t, n, m, lambda_max, function_type,
+                store_max_func_evals),
                sp_func_vals_XY, delimiter=',')
 
-    np.savetxt('fp_norms_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s.csv' %
+    np.savetxt('fp_norms_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s_%s.csv' %
                (option_t, n, m, lambda_max, no_vars,
-                region, function_type), fp_norms_XY,
+                region, function_type, store_max_func_evals),
+               fp_norms_XY,
                delimiter=',')
 
-    np.savetxt('fp_func_vals_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s.csv' %
+    np.savetxt('fp_func_vals_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s_%s.csv' %
                (option_t, n, m, lambda_max, no_vars,
-                region, function_type), fp_func_vals_XY,
+                region, function_type, store_max_func_evals),
+               fp_func_vals_XY,
                delimiter=',')
 
-    np.savetxt('func_evals_step_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s.csv' %
+    np.savetxt('func_evals_step_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s_%s.csv' %
                (option_t, n, m, lambda_max, no_vars,
-                region, function_type), func_evals_step_XY,
+                region, function_type, store_max_func_evals),
+               func_evals_step_XY,
                delimiter=',')
 
-    np.savetxt('func_evals_dir_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s.csv' %
+    np.savetxt('func_evals_dir_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s_%s.csv' %
                (option_t, n, m, lambda_max, no_vars,
-                region, function_type), func_evals_dir_XY,
+                region, function_type, store_max_func_evals),
+               func_evals_dir_XY,
                delimiter=',')
 
-    np.savetxt('time_taken_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s.csv' %
+    np.savetxt('time_taken_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s_%s.csv' %
                (option_t, n, m, lambda_max, no_vars,
-                region, function_type), time_taken_XY,
+                region, function_type, store_max_func_evals), time_taken_XY,
                delimiter=',')
 
-    np.savetxt('fp_func_vals_noise_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s.csv' %
+    np.savetxt('fp_func_vals_noise_%s_n=%s_m=%s_lambda_max=%s_%s'
+               '_%s_%s_%s.csv' %
                (option_t, n, m, lambda_max, no_vars,
-                region, function_type), fp_func_vals_noise_XY,
+                region, function_type, store_max_func_evals),
+               fp_func_vals_noise_XY,
                delimiter=',')
 
-    np.savetxt('good_dir_prop_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s.csv' %
+    np.savetxt('good_dir_prop_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s_%s.csv' %
                (option_t, n, m, lambda_max, no_vars,
-                region, function_type), good_dir_no_its_prop_XY,
+                region, function_type, store_max_func_evals),
+               good_dir_no_its_prop_XY,
                delimiter=',')
 
-    np.savetxt('no_its_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s.csv' %
+    np.savetxt('no_its_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s_%s.csv' %
                (option_t, n, m, lambda_max, no_vars,
-                region, function_type), no_its_XY,
+                region, function_type, store_max_func_evals),
+               no_its_XY,
                delimiter=',')
 
-    np.savetxt('good_dir_norm_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s.csv' %
+    np.savetxt('good_dir_norm_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s_%s.csv' %
                (option_t, n, m, lambda_max, no_vars,
-                region, function_type), good_dir_norm_XY,
+                region, function_type, store_max_func_evals), good_dir_norm_XY,
                delimiter=',')
 
-    np.savetxt('good_dir_func_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s.csv' %
+    np.savetxt('good_dir_func_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s_%s.csv' %
                (option_t, n, m, lambda_max, no_vars,
-                region, function_type), good_dir_func_XY,
+                region, function_type, store_max_func_evals), good_dir_func_XY,
                delimiter=',')
-    np.savetxt('mean_grad_norm_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s.csv' %
+    np.savetxt('mean_grad_norm_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s_%s.csv' %
                (option_t, n, m, lambda_max, no_vars,
-                region, function_type), mean_norm_grad_XY,
+                region, function_type, store_max_func_evals),
+               mean_norm_grad_XY,
                delimiter=',')
 
     return (sp_norms_XY, sp_func_vals_XY,
@@ -583,7 +595,7 @@ def num_exp_SNR_XY(f, f_no_noise, n, m, num_funcs, lambda_max, cov, noise_list,
 
 def num_exp_SNR_MP(f, f_no_noise, n, m, num_funcs, lambda_max, cov,
                    noise_list, no_vars, region, max_func_evals_list,
-                   type_inverse, function_type):
+                   type_inverse, function_type, store_max_func_evals):
     """
     Numerical experiments for MP - with various SNR.
 
@@ -747,68 +759,80 @@ def num_exp_SNR_MP(f, f_no_noise, n, m, num_funcs, lambda_max, cov,
                 good_dir_func_MP[index_noise, j] = np.mean(store_good_dir_func)
 
     option_t = 'MP'
-    np.savetxt('sp_norms_%s_n=%s_m=%s_lambda_max=%s_%s.csv' %
-               (option_t, n, m, lambda_max, function_type),
+    np.savetxt('sp_norms_%s_n=%s_m=%s_lambda_max=%s_%s_%s.csv' %
+               (option_t, n, m, lambda_max, function_type,
+                store_max_func_evals),
                sp_norms_MP, delimiter=',')
-    np.savetxt('sp_func_vals_%s_n=%s_m=%s_lambda_max=%s_%s.csv' %
-               (option_t, n, m, lambda_max, function_type),
+    np.savetxt('sp_func_vals_%s_n=%s_m=%s_lambda_max=%s_%s_%s.csv' %
+               (option_t, n, m, lambda_max, function_type,
+                store_max_func_evals),
                sp_func_vals_MP, delimiter=',')
 
-    np.savetxt('fp_norms_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s_%s.csv' %
+    np.savetxt('fp_norms_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s_%s_%s.csv' %
                (option_t, n, m, lambda_max, no_vars,
-                type_inverse, region, function_type), fp_norms_MP,
+                type_inverse, region, function_type, store_max_func_evals),
+               fp_norms_MP,
                delimiter=',')
 
-    np.savetxt('fp_func_vals_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s_%s.csv' %
+    np.savetxt('fp_func_vals_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s_%s_%s.csv' %
                (option_t, n, m, lambda_max, no_vars,
-                type_inverse, region, function_type), fp_func_vals_MP,
+                type_inverse, region, function_type, store_max_func_evals),
+               fp_func_vals_MP,
                delimiter=',')
 
-    np.savetxt('func_evals_step_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s_%s.csv' %
+    np.savetxt('func_evals_step_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s'
+               '_%s_%s.csv' %
                (option_t, n, m, lambda_max, no_vars,
-                type_inverse, region, function_type), func_evals_step_MP,
+                type_inverse, region, function_type, store_max_func_evals),
+               func_evals_step_MP,
                delimiter=',')
 
-    np.savetxt('func_evals_dir_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s_%s.csv' %
+    np.savetxt('func_evals_dir_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s_%s_%s.csv' %
                (option_t, n, m, lambda_max, no_vars,
-                type_inverse, region, function_type), func_evals_dir_MP,
+                type_inverse, region, function_type, store_max_func_evals),
+               func_evals_dir_MP,
                delimiter=',')
 
-    np.savetxt('time_taken_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s_%s.csv' %
+    np.savetxt('time_taken_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s_%s_%s.csv' %
                (option_t, n, m, lambda_max, no_vars,
-                type_inverse, region, function_type), time_taken_MP,
+                type_inverse, region, function_type, store_max_func_evals),
+               time_taken_MP,
                delimiter=',')
 
-    np.savetxt('fp_func_vals_noise_%s_n=%s_m=%s_lambda_max=%s_%s'
+    np.savetxt('fp_func_vals_noise_%s_n=%s_m=%s_lambda_max=%s_%s_%s'
                '_%s_%s_%s.csv' %
                (option_t, n, m, lambda_max, no_vars,
-                type_inverse, region, function_type),
+                type_inverse, region, function_type, store_max_func_evals),
                fp_func_vals_noise_MP,
                delimiter=',')
 
-    np.savetxt('good_dir_prop_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s_%s.csv' %
+    np.savetxt('good_dir_prop_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s_%s_%s.csv' %
                (option_t, n, m, lambda_max, no_vars,
-                type_inverse, region, function_type),
+                type_inverse, region, function_type, store_max_func_evals),
                good_dir_no_its_prop_MP,
                delimiter=',')
 
-    np.savetxt('no_its_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s_%s.csv' %
+    np.savetxt('no_its_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s_%s_%s.csv' %
                (option_t, n, m, lambda_max, no_vars,
-                type_inverse, region, function_type), no_its_MP,
+                type_inverse, region, function_type, store_max_func_evals),
+               no_its_MP,
                delimiter=',')
 
-    np.savetxt('good_dir_norm_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s_%s.csv' %
+    np.savetxt('good_dir_norm_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s_%s_%s.csv' %
                (option_t, n, m, lambda_max, no_vars,
-                type_inverse, region, function_type), good_dir_norm_MP,
+                type_inverse, region, function_type, store_max_func_evals),
+               good_dir_norm_MP,
                delimiter=',')
 
-    np.savetxt('good_dir_func_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s_%s.csv' %
+    np.savetxt('good_dir_func_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s_%s_%s.csv' %
                (option_t, n, m, lambda_max, no_vars,
-                type_inverse, region, function_type), good_dir_func_MP,
+                type_inverse, region, function_type, store_max_func_evals),
+               good_dir_func_MP,
                delimiter=',')
-    np.savetxt('mean_grad_norm_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s_%s.csv' %
+    np.savetxt('mean_grad_norm_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s_%s_%s.csv' %
                (option_t, n, m, lambda_max, no_vars,
-                type_inverse, region, function_type), mean_norm_grad_MP,
+                type_inverse, region, function_type, store_max_func_evals),
+               mean_norm_grad_MP,
                delimiter=',')
 
     return (sp_norms_MP, sp_func_vals_MP,
@@ -894,11 +918,12 @@ def quad_LS_XY_MP(f, f_no_noise, n, m, num_funcs, lambda_max, cov, noise_list,
                                     lambda_max, cov, noise_list,
                                     no_vars, region,
                                     max_func_evals_list, type_inverse,
-                                    function_type)
+                                    function_type, store_max_func_evals)
 
         results_XY = num_exp_SNR_XY(f, f_no_noise, n, m, num_funcs, lambda_max,
                                     cov, noise_list, no_vars, region,
-                                    max_func_evals_list, function_type)
+                                    max_func_evals_list, function_type,
+                                    store_max_func_evals)
 
         assert(np.all(np.round(results_XY[0], 5) ==
                       np.round(results_LS[0], 5)))
@@ -914,11 +939,12 @@ def quad_LS_XY_MP(f, f_no_noise, n, m, num_funcs, lambda_max, cov, noise_list,
         results_MP = num_exp_SNR_MP(f, f_no_noise, n, m, num_funcs, lambda_max,
                                     cov, noise_list, no_vars, region,
                                     max_func_evals_list, type_inverse,
-                                    function_type)
+                                    function_type, store_max_func_evals[0])
 
         results_XY = num_exp_SNR_XY(f, f_no_noise, n, m, num_funcs, lambda_max,
                                     cov, noise_list, no_vars, region,
-                                    max_func_evals_list, function_type)
+                                    max_func_evals_list, function_type,
+                                    store_max_func_evals[0])
         assert(np.all(np.round(results_XY[0], 5) ==
                       np.round(results_MP[0], 5)))
         assert(np.all(np.round(results_XY[1], 5) ==
