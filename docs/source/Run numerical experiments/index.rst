@@ -42,7 +42,7 @@ The program quad_num_exp_SNR.py is used to compare search directions for a large
 Values for :bash:`N`, :bash:`d`, :bash:`lambda_max`, :bash:`region`, :bash:`function_type`, :bash:`type_inverse` and :bash:`func_evals` will need to be provided to run quad_num_exp_SNR.py. The following
 table describes each input parameter.
 
-.. list-table:: Outputs of metod.py
+.. list-table:: Input parameters.
    :widths: 25 25 50
    :header-rows: 1
 
