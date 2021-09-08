@@ -38,7 +38,15 @@ def generate_func_params(j, cov, m, lambda_max):
     func_args_no_noise : tuple
                          Arguments passed to the function f without noise.
     """
-
+    if type(m) is not int:
+        raise ValueError('m must be an integer.')
+    if type(j) is not int:
+        raise ValueError('j must be an integer.')
+    if cov.shape != (m, m):
+        raise ValueError('cov must be of size (m, m).')
+    if (type(lambda_max) is not int):
+        raise ValueError('lambda_max must be an integer.')
+    
     seed = j * 50
     np.random.seed(seed)
     centre_point = np.random.multivariate_normal(np.zeros((m)), cov)
@@ -80,6 +88,14 @@ def calc_initial_func_values(m, num_funcs, lambda_max, cov, f_no_noise):
                    Stores all initial function values at centre_point for
                    each set of generated function parameters.
     """
+    if type(m) is not int:
+        raise ValueError('m must be an integer.')
+    if type(num_funcs) is not int:
+        raise ValueError('num_funcs must be an integer.')
+    if cov.shape != (m, m):
+        raise ValueError('cov must be of size (m, m).')
+    if (type(lambda_max) is not int):
+        raise ValueError('lambda_max must be an integer.')
 
     sp_func_vals = np.zeros((num_funcs))
     for j in tqdm.tqdm(range(num_funcs)):
@@ -114,7 +130,8 @@ def compute_var_quad_form(snr_list, sp_func_vals, region):
                  Store standard deviation of errors used to compute noisy
                  function values.
     """
-
+    if (type(region) is not int) and (type(region) is not float):
+        raise ValueError('region must be an integer or float.')
     noise_list = np.zeros((len(snr_list)))
     index = 0
     for snr in snr_list:
@@ -702,6 +719,7 @@ def num_exp_SNR_MP(f, f_no_noise, n, m, num_funcs, lambda_max, cov,
                         Average norm of direction relative to no_vars and m at
                         each iteration.
     """
+
     sp_norms_MP = np.zeros((noise_list.shape[0], num_funcs))
     fp_norms_MP = np.zeros((noise_list.shape[0], num_funcs))
     sp_func_vals_noise_MP = np.zeros((noise_list.shape[0], num_funcs))
@@ -905,6 +923,27 @@ def quad_LS_XY_MP(f, f_no_noise, n, m, num_funcs, lambda_max, cov, noise_list,
                            a predefined number of function evaluations to
                            compute step length and direction before stopping.
     """
+    if type(n) is not int:
+        raise ValueError('n must be an integer.')
+    if type(m) is not int:
+        raise ValueError('m must be an integer.')
+    if (type(num_funcs) is not int):
+        raise ValueError('num_funcs must be an integer.')
+    if (type(lambda_max) is not int):
+        raise ValueError('lambda_max must be an integer.')
+    if type(no_vars) is not int:
+        raise ValueError('no_vars must be an integer.')
+    if cov.shape != (m, m):
+        raise ValueError('cov must be of size (m, m).')
+    if no_vars > m:
+        raise ValueError('no_vars must be less than m.')
+    if (type(region) is not int) and (type(region) is not float):
+        raise ValueError('region must be an integer or float.')
+    if type_inverse != 'right' and type_inverse != 'left':
+        raise ValueError('type_inverse must either be right or left.')
+    if type(function_type) is not str:
+        raise ValueError('function_type must be a string.')
+
     if np.all(store_max_func_evals) == None:
         results_LS = num_exp_SNR_LS(f, f_no_noise, m, num_funcs, lambda_max,
                                     cov, noise_list, region, function_type)

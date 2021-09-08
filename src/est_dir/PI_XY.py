@@ -259,7 +259,6 @@ def calc_its_until_sc_XY(centre_point, f, func_args, n, m,
     norm_grad : list
                 Norm of direction relative to no_vars and m at each iteration.
     """
-
     t0 = time.time()
     if (no_vars > m):
         raise ValueError('Incorrect no_vars choice')

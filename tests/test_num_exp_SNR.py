@@ -1,4 +1,5 @@
 import numpy as np
+import pytest
 
 import est_dir
 
@@ -518,3 +519,370 @@ def test_8():
         assert(np.all(centre_point == centre_point_2))
         assert(np.all(minimizer == minimizer_2))
         assert(np.all(matrix == matrix_2))
+
+def test_9():
+    """
+    Test for error message - j not integer
+    """
+    m = 100
+    lambda_max = 1
+    j = False
+    cov = np.identity(100)
+    with pytest.raises(ValueError):
+       (est_dir.generate_func_params(j, cov, m, lambda_max))
+
+
+def test_10():
+    """
+    Test for error message - lambda_max not integer
+    """
+    m = 100
+    lambda_max =  None
+    j = 1
+    cov = np.identity(100)
+    with pytest.raises(ValueError):
+       (est_dir.generate_func_params(j, cov, m, lambda_max))
+
+
+def test_11():
+    """
+    Test for error message - cov not of shape (m, m)
+    """
+    m = 100
+    lambda_max =  None
+    j = 1
+    cov = np.identity(2)
+    with pytest.raises(ValueError):
+       (est_dir.generate_func_params(j, cov, m, lambda_max))
+
+
+def test_12():
+    """
+    Test for error message - n not integer
+    """
+    f = est_dir.quad_f_noise
+    f_no_noise = est_dir.quad_f
+    function_type = 'quad'
+    m = 100
+    n = '16'
+    lambda_max = 1
+    num_funcs = 5
+    cov = np.identity(m)
+    no_vars = m
+    snr_list = [0.5, 0.75, 1, 2]
+    region = 0.1
+    type_inverse = 'left'
+    store_max_func_evals = [1000, 1000, 2000, 2000]
+    noise_list = np.array([0.5, 1, 1.5, 2])
+    with pytest.raises(ValueError):
+       est_dir.quad_LS_XY_MP(f, f_no_noise, n, m, num_funcs, lambda_max, cov,
+                             noise_list, no_vars, region, function_type,
+                             type_inverse, store_max_func_evals)
+
+def test_13():
+    """
+    Test for error message - m not integer
+    """
+    m = '100'
+    lambda_max = 1
+    j = 5
+    cov = np.identity(100)
+    with pytest.raises(ValueError):
+       (est_dir.generate_func_params(j, cov, m, lambda_max))
+
+
+def test_14():
+    """
+    Test for error message - m not integer
+    """
+    f_no_noise = est_dir.quad_f
+    m = '100'
+    lambda_max = 1
+    num_funcs = 5
+    cov = np.identity(100)
+    with pytest.raises(ValueError):
+       (est_dir.calc_initial_func_values(
+        m, num_funcs, lambda_max, cov, f_no_noise))
+
+
+def test_15():
+    """
+    Test for error message - m not integer
+    """
+    f = est_dir.quad_f_noise
+    f_no_noise = est_dir.quad_f
+    function_type = 'quad'
+    m = '100'
+    n = 16
+    lambda_max = 1
+    num_funcs = 5
+    cov = np.identity(100)
+    no_vars = m
+    region = 0.1
+    type_inverse = 'left'
+    store_max_func_evals = [1000, 1000, 2000, 2000]
+    noise_list = np.array([0.5, 1, 1.5, 2])
+    with pytest.raises(ValueError):
+       est_dir.quad_LS_XY_MP(f, f_no_noise, n, m, num_funcs, lambda_max, cov,
+                             noise_list, no_vars, region, function_type,
+                             type_inverse, store_max_func_evals)
+
+
+def test_16():
+    """
+    Test for error message - num_funcs not integer
+    """
+    f = est_dir.quad_f_noise
+    f_no_noise = est_dir.quad_f
+    function_type = 'quad'
+    m = 100
+    n = 16
+    lambda_max = 1
+    num_funcs = '5'
+    cov = np.identity(m)
+    no_vars = m
+    region = 0.1
+    type_inverse = 'left'
+    store_max_func_evals = [1000, 1000, 2000, 2000]
+    noise_list = np.array([0.5, 1, 1.5, 2])
+    with pytest.raises(ValueError):
+       est_dir.quad_LS_XY_MP(f, f_no_noise, n, m, num_funcs, lambda_max, cov,
+                             noise_list, no_vars, region, function_type,
+                             type_inverse, store_max_func_evals)
+
+
+def test_17():
+    """
+    Test for error message - num_funcs not integer
+    """
+    f_no_noise = est_dir.quad_f
+    m = 100
+    lambda_max = 1
+    num_funcs = '5'
+    cov = np.identity(m)
+    with pytest.raises(ValueError):
+       (est_dir.calc_initial_func_values(
+        m, num_funcs, lambda_max, cov, f_no_noise))
+
+
+def test_18():
+    """
+    Test for error message - lambda_max not integer
+    """
+    f = est_dir.quad_f_noise
+    f_no_noise = est_dir.quad_f
+    function_type = 'quad'
+    m = 100
+    n = 16
+    lambda_max = '1'
+    num_funcs = 5
+    cov = np.identity(m)
+    no_vars = m
+    region = 0.1
+    type_inverse = 'left'
+    store_max_func_evals = [1000, 1000, 2000, 2000]
+    noise_list = np.array([0.5, 1, 1.5, 2])
+    with pytest.raises(ValueError):
+       est_dir.quad_LS_XY_MP(f, f_no_noise, n, m, num_funcs, lambda_max, cov,
+                             noise_list, no_vars, region, function_type,
+                             type_inverse, store_max_func_evals)
+
+
+def test_19():
+    """
+    Test for error message - lambda_max not integer
+    """
+    f_no_noise = est_dir.quad_f
+    m = 100
+    lambda_max = '1'
+    num_funcs = 5
+    cov = np.identity(m)
+    with pytest.raises(ValueError):
+       (est_dir.calc_initial_func_values(
+        m, num_funcs, lambda_max, cov, f_no_noise))
+
+
+def test_20():
+    """
+    Test for error message - no_vars not integer
+    """
+    f = est_dir.quad_f_noise
+    f_no_noise = est_dir.quad_f
+    function_type = 'quad'
+    m = 100
+    n = 16
+    lambda_max = 1
+    num_funcs = 5
+    cov = np.identity(m)
+    no_vars = True
+    snr_list = [0.5, 0.75, 1, 2]
+    region = 0.1
+    type_inverse = 'left'
+    store_max_func_evals = [1000, 1000, 2000, 2000]
+    sp_func_vals = (est_dir.calc_initial_func_values(
+                    m, num_funcs, lambda_max, cov, f_no_noise))
+    noise_list = est_dir.compute_var_quad_form(snr_list,
+                                               sp_func_vals, region)
+    with pytest.raises(ValueError):
+       est_dir.quad_LS_XY_MP(f, f_no_noise, n, m, num_funcs, lambda_max, cov,
+                             noise_list, no_vars, region, function_type,
+                             type_inverse, store_max_func_evals)
+
+
+def test_21():
+    """
+    Test for error message - cov.shape != (m, m)
+    """
+    f = est_dir.quad_f_noise
+    f_no_noise = est_dir.quad_f
+    function_type = 'quad'
+    m = 100
+    n = 16
+    lambda_max = 1
+    num_funcs = 5
+    cov = np.identity(2)
+    no_vars = m
+    region = 0.1
+    type_inverse = 'left'
+    store_max_func_evals = [1000, 1000, 2000, 2000]
+    noise_list = np.array([0.5, 1, 1.5, 2])
+    with pytest.raises(ValueError):
+       est_dir.quad_LS_XY_MP(f, f_no_noise, n, m, num_funcs, lambda_max, cov,
+                             noise_list, no_vars, region, function_type,
+                             type_inverse, store_max_func_evals)
+
+
+def test_22():
+    """
+    Test for error message - cov.shape != (m, m)
+    """
+    f_no_noise = est_dir.quad_f
+    m = 100
+    lambda_max = 1
+    num_funcs = 5
+    cov = np.identity(2)
+    with pytest.raises(ValueError):
+       (est_dir.calc_initial_func_values(
+        m, num_funcs, lambda_max, cov, f_no_noise))
+
+
+def test_23():
+    """
+    Test for error message - no_vars > m
+    """
+    f = est_dir.quad_f_noise
+    f_no_noise = est_dir.quad_f
+    function_type = 'quad'
+    m = 100
+    n = 16
+    lambda_max = 1
+    num_funcs = 5
+    cov = np.identity(m)
+    no_vars = m * 2
+    snr_list = [0.5, 0.75, 1, 2]
+    region = 0.1
+    type_inverse = 'left'
+    store_max_func_evals = [1000, 1000, 2000, 2000]
+    sp_func_vals = (est_dir.calc_initial_func_values(
+                    m, num_funcs, lambda_max, cov, f_no_noise))
+    noise_list = est_dir.compute_var_quad_form(snr_list,
+                                               sp_func_vals, region)
+    with pytest.raises(ValueError):
+       est_dir.quad_LS_XY_MP(f, f_no_noise, n, m, num_funcs, lambda_max, cov,
+                             noise_list, no_vars, region, function_type,
+                             type_inverse, store_max_func_evals)
+
+
+def test_24():
+    """
+    Test for error message - region not integer
+    """
+    f = est_dir.quad_f_noise
+    f_no_noise = est_dir.quad_f
+    function_type = 'quad'
+    m = 100
+    n = 16
+    lambda_max = 1
+    num_funcs = 5
+    cov = np.identity(m)
+    no_vars = m
+    region = False
+    type_inverse = 'left'
+    store_max_func_evals = [1000, 1000, 2000, 2000]
+    noise_list = np.array([0.5, 1, 1.5, 2])
+    with pytest.raises(ValueError):
+       est_dir.quad_LS_XY_MP(f, f_no_noise, n, m, num_funcs, lambda_max, cov,
+                             noise_list, no_vars, region, function_type,
+                             type_inverse, store_max_func_evals)
+
+
+def test_25():
+    """
+    Test for error message - region not integer
+    """
+    f_no_noise = est_dir.quad_f
+    m = 100
+    lambda_max = 1
+    num_funcs = 5
+    cov = np.identity(m)
+    snr_list = [0.5, 0.75, 1, 2]
+    region = False
+    sp_func_vals = (est_dir.calc_initial_func_values(
+                    m, num_funcs, lambda_max, cov, f_no_noise))
+    with pytest.raises(ValueError):
+       est_dir.compute_var_quad_form(snr_list, sp_func_vals, region)
+
+
+
+def test_26():
+    """
+    Test for error message - type_inverse != 'left' or type_inverse != 'right'.
+    """
+    f = est_dir.quad_f_noise
+    f_no_noise = est_dir.quad_f
+    function_type = 'quad'
+    m = 100
+    n = 16
+    lambda_max = 1
+    num_funcs = 5
+    cov = np.identity(m)
+    no_vars = m
+    snr_list = [0.5, 0.75, 1, 2]
+    region = 0.1
+    type_inverse = 'left_2'
+    store_max_func_evals = [1000, 1000, 2000, 2000]
+    sp_func_vals = (est_dir.calc_initial_func_values(
+                    m, num_funcs, lambda_max, cov, f_no_noise))
+    noise_list = est_dir.compute_var_quad_form(snr_list,
+                                               sp_func_vals, region)
+    with pytest.raises(ValueError):
+       est_dir.quad_LS_XY_MP(f, f_no_noise, n, m, num_funcs, lambda_max, cov,
+                             noise_list, no_vars, region, function_type,
+                             type_inverse, store_max_func_evals)
+
+
+def test_27():
+    """
+    Test for error message - function_type is not a string.
+    """
+    f = est_dir.quad_f_noise
+    f_no_noise = est_dir.quad_f
+    function_type = False
+    m = 100
+    n = 16
+    lambda_max = 1
+    num_funcs = 5
+    cov = np.identity(m)
+    no_vars = m
+    snr_list = [0.5, 0.75, 1, 2]
+    region = 0.1
+    type_inverse = 'left'
+    store_max_func_evals = [1000, 1000, 2000, 2000]
+    sp_func_vals = (est_dir.calc_initial_func_values(
+                    m, num_funcs, lambda_max, cov, f_no_noise))
+    noise_list = est_dir.compute_var_quad_form(snr_list,
+                                               sp_func_vals, region)
+    with pytest.raises(ValueError):
+       est_dir.quad_LS_XY_MP(f, f_no_noise, n, m, num_funcs, lambda_max, cov,
+                             noise_list, no_vars, region, function_type,
+                             type_inverse, store_max_func_evals)
