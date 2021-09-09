@@ -56,7 +56,6 @@ Apply the first phase of RSM with an alternative search direction for large dime
 ...  number_its) = (est_dir.rsm_alternative_search_direction
                     (starting_point, f, func_args, n, d,
                      no_vars, region, max_func_evals))
-
 >>> assert(np.linalg.norm(starting_point - minimizer) >
 ...        np.linalg.norm(final_point - minimizer))
 >>> assert(sp_func_val > fp_func_val)
@@ -67,4 +66,4 @@ Apply the first phase of RSM with an alternative search direction for large dime
 
 ## Examples
 
-Additional examples of the first phase of RSM with alternative search direction are as Python scripts. All examples can be found at https://github.com/Megscammell/Estimate-of-direction-in-RSM/tree/main/Examples. All examples have an intuitive layout and structure, which can be easily followed. 
+Additional examples of the first phase of RSM with alternative search direction can be found at https://github.com/Megscammell/Estimate-of-direction-in-RSM/tree/main/Examples. All examples have an intuitive layout and structure, which can be easily followed. 

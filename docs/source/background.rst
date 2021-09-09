@@ -76,34 +76,6 @@ Furthermore, suppose :math:`Y` contains the response function values at each obs
 
     s^{(k)} = M^TY
 
-Throughout, :ref:`MY <alt_search_1>` will be used to denote the search direction :eq:`search_1`.
-
-.. _alt_search_2:
-
-Alternative search direction with Moore-Penrose inverse (MP)
-------------------------------------------------------------------
-
-Consider the design matrix :math:`M` and response vector :math:`Y` defined in :ref:`MY <alt_search_1>`. Consider the following alternative search directions using the Moore-Penrose inverse.
-
-.. math::
-    :label: search_MP_left
-
-    s^{(k)} = (M^TM)^-M^TY,
-
-and
-
-.. math::
-    :label: search_MP_right
-
-    s^{(k)} = M^T(MM^T)^-Y,
- 
-where :math:`(.)^-` is the Moore-Penrose pseudo inverse.
-Throughout, :ref:`MP <alt_search_2>` will be used to denote the search directions :eq:`search_MP_left` and :eq:`search_MP_right`.
-
-Comparison of search directions
----------------------------------------------------------
-
-Iterations of :eq:`sd` with search directions :ref:`MY <alt_search_1>` and :ref:`MP <alt_search_2>` will terminate when
-a predefined total number of response function evaluations are met. The number of response function evaluations can be fixed or can be determined
-by applying the first phase of RSM with search direction :ref:`LS <search_LS>` first, and then applying the same number of response function evaluations
-with search directions :ref:`MY <alt_search_1>` and :ref:`MP <alt_search_2>`.
+The advantage of using search directions of form :eq:`search_1` is that all variables of :math:`x^{(k)}` can be updated simultaneously. Furthermore, numerical comparisons show that search directions of form
+:eq:`search_1` are more accurate than using search directions discussed in :ref:`LS <search_LS>` when the dimension is large. The code and outputs for numerical comparisons can be found at
+https://github.com/Megscammell/Estimate-of-direction-in-RSM/tree/main/numerical_experiments.
