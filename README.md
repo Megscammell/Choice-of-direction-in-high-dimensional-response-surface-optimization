@@ -5,9 +5,6 @@
 
 Response surface methodology (RSM) is used to approximate a minimizer of a response function from a series of observations that contain errors. The first phase of RSM involves constructing a linear model, whose coefficients are used to determine the search direction for steepest descent. However, if the number of variables is large, it can be computationally expensive to approximate the search direction. Hence, an alternative search direction is proposed in order to improve the efficiency and accuracy of the first phase of RSM when the number of variables is large.
 
-Numerical experiments and outputs can be found at [here](https://github.com/Megscammell/Estimate-of-direction-in-RSM/tree/main/numerical_experiments). The aim of experiments is to compare the alternative search direction with the standard search direction, consisting of the coefficients of the local linear model.
-
-
 ## Documentation
 Documentation for Estimate-of-direction-in-RSM can be found at https://estimate-of-direction-in-rsm.readthedocs.io/.
 
@@ -22,4 +19,52 @@ $ pytest
 ```
 
 ## Quickstart
-A quickstart guide to run all numerical experiments can be found [here](https://estimate-of-direction-in-rsm.readthedocs.io/en/latest/Run%20numerical%20experiments/index.html).
+
+Apply the first phase of RSM with an alternative search direction for large dimensions.
+
+```python
+>>> import est_dir
+>>> import numpy as np
+>>>
+>>> np.random.seed(10)
+>>> d = 100
+>>> no_vars = d
+>>> n = 16
+>>> region = 0.1
+>>> max_func_evals = 1000
+>>> lambda_1 = 1
+>>> lambda_2 = 4
+>>> cov = np.identity(d)
+>>> diag_vals = np.zeros(d)
+>>> diag_vals[:2] = np.array([lambda_1, lambda_2])
+>>> diag_vals[2:] = np.random.uniform(lambda_1 + 0.1,
+...                                   lambda_2 - 0.1, (d - 2))
+>>> A = np.diag(diag_vals)
+>>> starting_point = np.random.multivariate_normal(np.zeros((d)), cov)
+>>> minimizer = np.zeros((d, ))
+>>> 
+>>> def f(x, minimizer, A, mu, sd):
+...    return ((x - minimizer).T @ A @ (x - minimizer) + np.random.normal(mu, sd))
+...    
+>>> func_args = (minimizer, A, 0, 0.5)
+>>> (final_point,
+...  sp_func_val,
+...  fp_func_val,
+...  time_taken,
+...  func_evals_step,
+...  func_evals_dir,
+...  number_its) = (est_dir.rsm_alternative_search_direction
+                    (starting_point, f, func_args, n, d,
+                     no_vars, region, max_func_evals))
+
+>>> assert(np.linalg.norm(starting_point - minimizer) >
+...        np.linalg.norm(final_point - minimizer))
+>>> assert(sp_func_val > fp_func_val)
+>>> assert(func_evals_step + func_evals_dir <= max_func_evals)
+
+```
+
+
+## Examples
+
+Additional examples of the first phase of RSM with alternative search direction are as Python scripts. All examples can be found at https://github.com/Megscammell/Estimate-of-direction-in-RSM/tree/main/Examples. All examples have an intuitive layout and structure, which can be easily followed. 
