@@ -144,8 +144,6 @@ def calc_first_phase_RSM_MP(centre_point, init_func_val, f, func_args,
     total_func_evals_dir : integer
                            Total number of response function evaluations
                            to compute direction.
-    norm_direction_relative_to_m : float
-                                   Norm of direction relative to no_vars and m.
     """
     direction, total_func_evals_dir = (compute_direction_MP
                                        (n, m, centre_point, f,
@@ -158,7 +156,7 @@ def calc_first_phase_RSM_MP(centre_point, init_func_val, f, func_args,
                                        back_tol, const_forward,
                                        forward_tol, f, func_args))
     return (upd_point, f_new, total_func_evals_step,
-            total_func_evals_dir, (np.linalg.norm(direction) / no_vars) * m)
+            total_func_evals_dir)
 
 
 def calc_its_until_sc_MP(centre_point, f, func_args, n, m,
@@ -271,8 +269,6 @@ def calc_its_until_sc_MP(centre_point, f, func_args, n, m,
                           at the k-th iteration, subtracted by response
                           function value with point at the
                           (k+1)-th iteration.
-    norm_grad : list
-                Norm of direction relative to no_vars and m at each iteration.
     """
 
     t0 = time.time()
@@ -281,19 +277,17 @@ def calc_its_until_sc_MP(centre_point, f, func_args, n, m,
     store_good_dir = 0
     store_good_dir_norm = []
     store_good_dir_func = []
-    store_norm_grad = []
     total_func_evals_step = 0
     total_func_evals_dir = 0
     step = 1
     init_func_val = f(centre_point, *func_args)
     (upd_point, f_val,
      func_evals_step,
-     func_evals_dir,
-     norm_grad) = (calc_first_phase_RSM_MP
-                   (centre_point, np.copy(init_func_val), f,
-                    func_args, n, m, const_back,
-                    back_tol, const_forward, forward_tol, step,
-                    no_vars, region, type_inverse))
+     func_evals_dir) = (calc_first_phase_RSM_MP
+                        (centre_point, np.copy(init_func_val), f,
+                         func_args, n, m, const_back,
+                         back_tol, const_forward, forward_tol, step,
+                         no_vars, region, type_inverse))
     total_func_evals_step += func_evals_step
     total_func_evals_dir += func_evals_dir
     no_iterations = 1
@@ -312,16 +306,14 @@ def calc_its_until_sc_MP(centre_point, f, func_args, n, m,
 
     while (total_func_evals_step + total_func_evals_dir + n) < max_func_evals:
         centre_point = upd_point
-        store_norm_grad.append(norm_grad)
         new_func_val = f_val
         step = 1
         (upd_point, f_val,
          func_evals_step,
-         func_evals_dir,
-         norm_grad) = (calc_first_phase_RSM_MP
-                       (centre_point, np.copy(new_func_val), f, func_args,
-                        n, m, const_back, back_tol, const_forward, forward_tol,
-                        step, no_vars, region, type_inverse))
+         func_evals_dir) = (calc_first_phase_RSM_MP
+                            (centre_point, np.copy(new_func_val), f, func_args,
+                             n, m, const_back, back_tol, const_forward,
+                             forward_tol, step, no_vars, region, type_inverse))
         total_func_evals_step += func_evals_step
         total_func_evals_dir += func_evals_dir
         no_iterations += 1
@@ -343,5 +335,4 @@ def calc_its_until_sc_MP(centre_point, f, func_args, n, m,
     return (upd_point, init_func_val, f_val, full_time,
             total_func_evals_step, total_func_evals_dir,
             no_iterations, store_good_dir,
-            store_good_dir_norm, store_good_dir_func,
-            store_norm_grad)
+            store_good_dir_norm, store_good_dir_func)

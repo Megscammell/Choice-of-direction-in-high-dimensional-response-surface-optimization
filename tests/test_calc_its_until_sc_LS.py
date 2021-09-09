@@ -34,16 +34,15 @@ def test_1():
      total_func_evals_dir,
      no_its, store_good_dir,
      store_good_dir_norm,
-     store_good_dir_func,
-     store_norm_grad) = est_dir.calc_its_until_sc_LS(centre_point, f,
-                                                     func_args, m,
-                                                     f_no_noise,
-                                                     func_args_no_noise,
-                                                     region,
-                                                     const_back,
-                                                     back_tol,
-                                                     const_forward,
-                                                     forward_tol)
+     store_good_dir_func) = est_dir.calc_its_until_sc_LS(centre_point, f,
+                                                         func_args, m,
+                                                         f_no_noise,
+                                                         func_args_no_noise,
+                                                         region,
+                                                         const_back,
+                                                         back_tol,
+                                                         const_forward,
+                                                         forward_tol)
     assert(type(total_func_evals_step) is int)
     assert(type(total_func_evals_dir) is int)
     assert(type(total_func_evals_step) is int)
@@ -57,7 +56,6 @@ def test_1():
     assert(f_val == init_func_val)
     assert(np.all(np.round(upd_point, 5) == np.round(centre_point, 5)))
     assert(store_good_dir == 0)
-    assert(len(store_norm_grad) == 0)
 
 
 def test_2():
@@ -87,16 +85,15 @@ def test_2():
      total_func_evals_dir,
      no_its, store_good_dir,
      store_good_dir_norm,
-     store_good_dir_func,
-     store_norm_grad) = est_dir.calc_its_until_sc_LS(centre_point, f,
-                                                     func_args, m,
-                                                     f_no_noise,
-                                                     func_args_no_noise,
-                                                     region,
-                                                     const_back,
-                                                     back_tol,
-                                                     const_forward,
-                                                     forward_tol)
+     store_good_dir_func) = est_dir.calc_its_until_sc_LS(centre_point, f,
+                                                         func_args, m,
+                                                         f_no_noise,
+                                                         func_args_no_noise,
+                                                         region,
+                                                         const_back,
+                                                         back_tol,
+                                                         const_forward,
+                                                         forward_tol)
     assert(type(total_func_evals_step) is int)
     assert(type(total_func_evals_dir) is int)
     assert(type(total_func_evals_step) is int)
@@ -109,7 +106,6 @@ def test_2():
     assert(len(store_good_dir_func) == store_good_dir)
     assert(f_val < init_func_val)
     assert(store_good_dir > 0)
-    assert(len(store_norm_grad) > 0)
 
 
 def test_3():
@@ -139,17 +135,16 @@ def test_3():
      total_func_evals_dir,
      no_its, store_good_dir,
      store_good_dir_norm,
-     store_good_dir_func,
-     store_norm_grad) = est_dir.calc_its_until_sc_LS(centre_point, f,
-                                                     func_args, m,
-                                                     f_no_noise,
-                                                     func_args_no_noise,
-                                                     region,
-                                                     const_back,
-                                                     back_tol,
-                                                     const_forward,
-                                                     forward_tol,
-                                                     tol_evals=50)
+     store_good_dir_func) = est_dir.calc_its_until_sc_LS(centre_point, f,
+                                                         func_args, m,
+                                                         f_no_noise,
+                                                         func_args_no_noise,
+                                                         region,
+                                                         const_back,
+                                                         back_tol,
+                                                         const_forward,
+                                                         forward_tol,
+                                                         tol_evals=50)
     assert(type(total_func_evals_step) is int)
     assert(type(total_func_evals_dir) is int)
     assert(type(total_func_evals_step) is int)
@@ -162,4 +157,3 @@ def test_3():
     assert(len(store_good_dir_func) == store_good_dir)
     assert(f_val < init_func_val)
     assert(store_good_dir > 0)
-    assert(len(store_norm_grad) > 0)

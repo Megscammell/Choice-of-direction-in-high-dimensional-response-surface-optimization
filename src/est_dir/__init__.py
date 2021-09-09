@@ -35,3 +35,4 @@ from .numerical_exp_SNR import num_exp_SNR_MP
 from .numerical_exp_SNR import quad_LS_XY_MP
 from .numerical_exp_SNR import calc_initial_func_values
 from .numerical_exp_SNR import compute_var_quad_form
+from .alternative_search_direction import rsm_alternative_search_direction

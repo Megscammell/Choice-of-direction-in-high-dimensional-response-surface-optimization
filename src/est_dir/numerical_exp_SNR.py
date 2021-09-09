@@ -46,7 +46,7 @@ def generate_func_params(j, cov, m, lambda_max):
         raise ValueError('cov must be of size (m, m).')
     if (type(lambda_max) is not int):
         raise ValueError('lambda_max must be an integer.')
-    
+
     seed = j * 50
     np.random.seed(seed)
     centre_point = np.random.multivariate_normal(np.zeros((m)), cov)
@@ -228,10 +228,6 @@ def num_exp_SNR_LS(f, f_no_noise, m, num_funcs, lambda_max, cov,
                        function value with point at the
                        (k+1)-th iteration. Then an average of all
                        response function values is stored.
-    mean_norm_grad_LS : 2-D array
-                        Average norm of direction relative to no_vars and m at
-                        each iteration.
-
     """
     n = 16
     no_vars = 10
@@ -248,7 +244,6 @@ def num_exp_SNR_LS(f, f_no_noise, m, num_funcs, lambda_max, cov,
     good_dir_no_its_prop_LS = np.zeros((noise_list.shape[0], num_funcs))
     good_dir_norm_LS = np.zeros((noise_list.shape[0], num_funcs))
     good_dir_func_LS = np.zeros((noise_list.shape[0], num_funcs))
-    mean_norm_grad_LS = np.zeros((noise_list.shape[0], num_funcs))
 
     for index_noise in range(noise_list.shape[0]):
         noise_sd = noise_list[index_noise]
@@ -273,18 +268,14 @@ def num_exp_SNR_LS(f, f_no_noise, m, num_funcs, lambda_max, cov,
              no_its_LS[index_noise, j],
              store_good_dir,
              store_good_dir_norm,
-             store_good_dir_func,
-             store_norm_grad) = (est_dir.calc_its_until_sc_LS(
-                                 centre_point, f, func_args, m,
-                                 f_no_noise, func_args_no_noise,
-                                 region))
+             store_good_dir_func) = (est_dir.calc_its_until_sc_LS(
+                                     centre_point, f, func_args, m,
+                                     f_no_noise, func_args_no_noise,
+                                     region))
             fp_norms_LS[index_noise, j] = np.linalg.norm(minimizer - upd_point)
             fp_func_vals_LS[index_noise, j] = f_no_noise(upd_point, minimizer,
                                                          matrix)
             good_dir_no_its_prop_LS[index_noise, j] = store_good_dir
-
-            if len(store_norm_grad) > 0:
-                mean_norm_grad_LS[index_noise, j] = np.mean(store_norm_grad)
 
             if len(store_good_dir_norm) > 0:
                 good_dir_norm_LS[index_noise, j] = np.mean(store_good_dir_norm)
@@ -347,10 +338,6 @@ def num_exp_SNR_LS(f, f_no_noise, m, num_funcs, lambda_max, cov,
                (option_t, n, m, lambda_max, no_vars,
                 region,  function_type), good_dir_func_LS,
                delimiter=',')
-    np.savetxt('mean_grad_norm_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s.csv' %
-               (option_t, n, m, lambda_max, no_vars,
-                region, function_type), mean_norm_grad_LS,
-               delimiter=',')
 
     return (sp_norms_LS, sp_func_vals_LS,
             fp_norms_LS, fp_func_vals_LS,
@@ -359,8 +346,7 @@ def num_exp_SNR_LS(f, f_no_noise, m, num_funcs, lambda_max, cov,
             time_taken_LS, func_evals_step_LS,
             func_evals_dir_LS, no_its_LS,
             good_dir_no_its_prop_LS,
-            good_dir_norm_LS, good_dir_func_LS,
-            mean_norm_grad_LS)
+            good_dir_norm_LS, good_dir_func_LS)
 
 
 def num_exp_SNR_XY(f, f_no_noise, n, m, num_funcs, lambda_max, cov, noise_list,
@@ -466,9 +452,6 @@ def num_exp_SNR_XY(f, f_no_noise, n, m, num_funcs, lambda_max, cov, noise_list,
                        function value with point at the
                        (k+1)-th iteration. Then an average of all
                        response function values is stored.
-    mean_norm_grad_XY : 2-D array
-                        Average norm of direction relative to no_vars and m at
-                        each iteration.
     """
     sp_norms_XY = np.zeros((noise_list.shape[0], num_funcs))
     fp_norms_XY = np.zeros((noise_list.shape[0], num_funcs))
@@ -483,7 +466,6 @@ def num_exp_SNR_XY(f, f_no_noise, n, m, num_funcs, lambda_max, cov, noise_list,
     good_dir_no_its_prop_XY = np.zeros((noise_list.shape[0], num_funcs))
     good_dir_norm_XY = np.zeros((noise_list.shape[0], num_funcs))
     good_dir_func_XY = np.zeros((noise_list.shape[0], num_funcs))
-    mean_norm_grad_XY = np.zeros((noise_list.shape[0], num_funcs))
 
     for index_noise in range(noise_list.shape[0]):
         max_func_evals = max_func_evals_list[index_noise]
@@ -509,18 +491,14 @@ def num_exp_SNR_XY(f, f_no_noise, n, m, num_funcs, lambda_max, cov, noise_list,
              no_its_XY[index_noise, j],
              store_good_dir,
              store_good_dir_norm,
-             store_good_dir_func,
-             store_norm_grad) = (est_dir.calc_its_until_sc_XY(
-                                 centre_point, f, func_args, n, m, f_no_noise,
-                                 func_args_no_noise, no_vars, region,
-                                 max_func_evals))
+             store_good_dir_func) = (est_dir.calc_its_until_sc_XY(
+                                     centre_point, f, func_args, n, m,
+                                     f_no_noise, func_args_no_noise,
+                                     no_vars, region, max_func_evals))
             fp_norms_XY[index_noise, j] = np.linalg.norm(minimizer - upd_point)
             fp_func_vals_XY[index_noise, j] = f_no_noise(upd_point, minimizer,
                                                          matrix)
             good_dir_no_its_prop_XY[index_noise, j] = store_good_dir
-
-            if len(store_norm_grad) > 0:
-                mean_norm_grad_XY[index_noise, j] = np.mean(store_norm_grad)
 
             if len(store_good_dir_norm) > 0:
                 good_dir_norm_XY[index_noise, j] = np.mean(store_good_dir_norm)
@@ -593,11 +571,6 @@ def num_exp_SNR_XY(f, f_no_noise, n, m, num_funcs, lambda_max, cov, noise_list,
                (option_t, n, m, lambda_max, no_vars,
                 region, function_type, store_max_func_evals), good_dir_func_XY,
                delimiter=',')
-    np.savetxt('mean_grad_norm_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s_%s.csv' %
-               (option_t, n, m, lambda_max, no_vars,
-                region, function_type, store_max_func_evals),
-               mean_norm_grad_XY,
-               delimiter=',')
 
     return (sp_norms_XY, sp_func_vals_XY,
             fp_norms_XY, fp_func_vals_XY,
@@ -606,8 +579,7 @@ def num_exp_SNR_XY(f, f_no_noise, n, m, num_funcs, lambda_max, cov, noise_list,
             time_taken_XY, func_evals_step_XY,
             func_evals_dir_XY, no_its_XY,
             good_dir_no_its_prop_XY,
-            good_dir_norm_XY, good_dir_func_XY,
-            mean_norm_grad_XY)
+            good_dir_norm_XY, good_dir_func_XY)
 
 
 def num_exp_SNR_MP(f, f_no_noise, n, m, num_funcs, lambda_max, cov,
@@ -715,9 +687,6 @@ def num_exp_SNR_MP(f, f_no_noise, n, m, num_funcs, lambda_max, cov,
                        function value with point at the
                        (k+1)-th iteration. Then an average of all
                        response function values is stored.
-    mean_norm_grad_MP : 2-D array
-                        Average norm of direction relative to no_vars and m at
-                        each iteration.
     """
 
     sp_norms_MP = np.zeros((noise_list.shape[0], num_funcs))
@@ -733,7 +702,6 @@ def num_exp_SNR_MP(f, f_no_noise, n, m, num_funcs, lambda_max, cov,
     good_dir_no_its_prop_MP = np.zeros((noise_list.shape[0], num_funcs))
     good_dir_norm_MP = np.zeros((noise_list.shape[0], num_funcs))
     good_dir_func_MP = np.zeros((noise_list.shape[0], num_funcs))
-    mean_norm_grad_MP = np.zeros((noise_list.shape[0], num_funcs))
 
     for index_noise in range(noise_list.shape[0]):
         max_func_evals = max_func_evals_list[index_noise]
@@ -759,18 +727,14 @@ def num_exp_SNR_MP(f, f_no_noise, n, m, num_funcs, lambda_max, cov,
              no_its_MP[index_noise, j],
              store_good_dir,
              store_good_dir_norm,
-             store_good_dir_func,
-             store_norm_grad) = (est_dir.calc_its_until_sc_MP(
-                                 centre_point, f, func_args, n, m, f_no_noise,
-                                 func_args_no_noise, no_vars, region,
-                                 max_func_evals, type_inverse))
+             store_good_dir_func) = (est_dir.calc_its_until_sc_MP(
+                                     centre_point, f, func_args, n, m,
+                                     f_no_noise, func_args_no_noise, no_vars,
+                                     region, max_func_evals, type_inverse))
             fp_norms_MP[index_noise, j] = np.linalg.norm(minimizer - upd_point)
             fp_func_vals_MP[index_noise, j] = f_no_noise(upd_point, minimizer,
                                                          matrix)
             good_dir_no_its_prop_MP[index_noise, j] = store_good_dir
-
-            if len(store_norm_grad) > 0:
-                mean_norm_grad_MP[index_noise, j] = np.mean(store_norm_grad)
 
             if len(store_good_dir_norm) > 0:
                 good_dir_norm_MP[index_noise, j] = np.mean(store_good_dir_norm)
@@ -847,11 +811,6 @@ def num_exp_SNR_MP(f, f_no_noise, n, m, num_funcs, lambda_max, cov,
                 type_inverse, region, function_type, store_max_func_evals),
                good_dir_func_MP,
                delimiter=',')
-    np.savetxt('mean_grad_norm_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s_%s_%s.csv' %
-               (option_t, n, m, lambda_max, no_vars,
-                type_inverse, region, function_type, store_max_func_evals),
-               mean_norm_grad_MP,
-               delimiter=',')
 
     return (sp_norms_MP, sp_func_vals_MP,
             fp_norms_MP, fp_func_vals_MP,
@@ -860,8 +819,7 @@ def num_exp_SNR_MP(f, f_no_noise, n, m, num_funcs, lambda_max, cov,
             time_taken_MP, func_evals_step_MP,
             func_evals_dir_MP, no_its_MP,
             good_dir_no_its_prop_MP,
-            good_dir_norm_MP, good_dir_func_MP,
-            mean_norm_grad_MP)
+            good_dir_norm_MP, good_dir_func_MP)
 
 
 def quad_LS_XY_MP(f, f_no_noise, n, m, num_funcs, lambda_max, cov, noise_list,

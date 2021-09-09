@@ -246,8 +246,6 @@ def calc_first_phase_RSM_LS(centre_point, init_func_val, f, func_args,
     flag : boolean
            Will be False if direction cannot be computed. Otherwise, will
            be True if direction can be computed.
-    norm_direction_relative_to_m : float
-                                   Norm of direction relative to no_vars and m.
     """
 
     direction, total_func_evals_dir = (compute_direction_LS
@@ -262,10 +260,9 @@ def calc_first_phase_RSM_LS(centre_point, init_func_val, f, func_args,
                                            back_tol, const_forward,
                                            forward_tol, f, func_args))
         return (upd_point, f_new, total_func_evals_step,
-                total_func_evals_dir, True,
-                (np.linalg.norm(direction) / no_vars) * m)
+                total_func_evals_dir, True)
     else:
-        return centre_point, init_func_val, 0, total_func_evals_dir, False, 0
+        return centre_point, init_func_val, 0, total_func_evals_dir, False
 
 
 def calc_its_until_sc_LS(centre_point, f, func_args, m, f_no_noise,
@@ -367,16 +364,12 @@ def calc_its_until_sc_LS(centre_point, f, func_args, m, f_no_noise,
                           at the k-th iteration, subtracted by the response
                           function value with point at the
                           (k+1)-th iteration.
-    norm_grad : list
-                Norm of direction relative to no_vars and m at each iteration.
-
     """
     t0 = time.time()
     no_vars = 10
     store_good_dir = 0
     store_good_dir_norm = []
     store_good_dir_func = []
-    store_norm_grad = []
     total_func_evals_step = 0
     total_func_evals_dir = 0
     step = 1
@@ -384,10 +377,10 @@ def calc_its_until_sc_LS(centre_point, f, func_args, m, f_no_noise,
     (upd_point, f_val,
      func_evals_step,
      func_evals_dir,
-     flag, norm_grad) = (calc_first_phase_RSM_LS
-                         (centre_point, np.copy(init_func_val), f,
-                          func_args, m, const_back, back_tol, const_forward,
-                          forward_tol, step, no_vars, region))
+     flag) = (calc_first_phase_RSM_LS
+              (centre_point, np.copy(init_func_val), f,
+               func_args, m, const_back, back_tol, const_forward,
+               forward_tol, step, no_vars, region))
 
     total_func_evals_step += func_evals_step
     total_func_evals_dir += func_evals_dir
@@ -405,17 +398,16 @@ def calc_its_until_sc_LS(centre_point, f, func_args, m, f_no_noise,
 
     while flag:
         centre_point = upd_point
-        store_norm_grad.append(norm_grad)
         new_func_val = f_val
         step = 1
         (upd_point, f_val,
          func_evals_step,
          func_evals_dir,
-         flag, norm_grad) = (calc_first_phase_RSM_LS
-                             (centre_point, np.copy(new_func_val), f,
-                              func_args, m, const_back, back_tol,
-                              const_forward, forward_tol,
-                              step, no_vars, region))
+         flag) = (calc_first_phase_RSM_LS
+                  (centre_point, np.copy(new_func_val), f,
+                   func_args, m, const_back, back_tol,
+                   const_forward, forward_tol,
+                   step, no_vars, region))
         total_func_evals_step += func_evals_step
         total_func_evals_dir += func_evals_dir
         no_iterations += 1
@@ -439,5 +431,4 @@ def calc_its_until_sc_LS(centre_point, f, func_args, m, f_no_noise,
     return (upd_point, init_func_val, f_val, full_time,
             total_func_evals_step, total_func_evals_dir,
             no_iterations, store_good_dir,
-            store_good_dir_norm, store_good_dir_func,
-            store_norm_grad)
+            store_good_dir_norm, store_good_dir_func)

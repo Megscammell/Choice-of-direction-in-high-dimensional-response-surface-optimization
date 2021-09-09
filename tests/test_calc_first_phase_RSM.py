@@ -224,16 +224,15 @@ def test_9():
      f_new,
      total_func_evals_step,
      total_func_evals_dir,
-     flag, mean_norm_grad) = (est_dir.calc_first_phase_RSM_LS
-                              (centre_point, init_func_val, f, func_args,
-                               m, const_back, back_tol, const_forward,
-                               forward_tol, step, no_vars, region))
+     flag) = (est_dir.calc_first_phase_RSM_LS
+              (centre_point, init_func_val, f, func_args,
+               m, const_back, back_tol, const_forward,
+               forward_tol, step, no_vars, region))
     assert(upd_point.shape == (m, ))
     assert(f_new < init_func_val)
     assert(total_func_evals_step > 0)
     assert(total_func_evals_dir == 16)
     assert(flag == True)
-    assert(mean_norm_grad > 0)
 
 
 def test_10():
@@ -261,16 +260,15 @@ def test_10():
      f_new,
      total_func_evals_step,
      total_func_evals_dir,
-     flag, mean_norm_grad) = (est_dir.calc_first_phase_RSM_LS
-                              (centre_point, init_func_val, f, func_args,
-                               m, const_back, back_tol, const_forward,
-                               forward_tol, step, no_vars, region))
+     flag) = (est_dir.calc_first_phase_RSM_LS
+              (centre_point, init_func_val, f, func_args,
+               m, const_back, back_tol, const_forward,
+               forward_tol, step, no_vars, region))
     assert(np.all(np.round(upd_point, 5) == np.round(centre_point, 5)))
     assert(f_new == init_func_val)
     assert(total_func_evals_step == 0)
     assert(total_func_evals_dir == n * (int(m / no_vars)))
     assert(flag == False)
-    assert(mean_norm_grad == 0)
 
 
 def test_11():
@@ -296,16 +294,15 @@ def test_11():
     (upd_point,
      f_new,
      total_func_evals_step,
-     total_func_evals_dir,
-     mean_norm_grad) = (est_dir.calc_first_phase_RSM_XY
-                        (centre_point, init_func_val, f, func_args,
-                         n, m, const_back, back_tol,
-                         const_forward, forward_tol, step, no_vars, region))
+     total_func_evals_dir) = (est_dir.calc_first_phase_RSM_XY
+                              (centre_point, init_func_val, f, func_args,
+                               n, m, const_back, back_tol,
+                               const_forward, forward_tol, step, no_vars,
+                               region))
     assert(upd_point.shape == (m, ))
     assert(f_new < init_func_val)
     assert(total_func_evals_step > 0)
     assert(total_func_evals_dir == n)
-    assert(mean_norm_grad > 0)
 
 
 def test_12():
@@ -501,13 +498,12 @@ def test_16():
     (upd_point,
      f_new,
      total_func_evals_step,
-     total_func_evals_dir,
-     mean_norm_grad) = (est_dir.calc_first_phase_RSM_MP
-                        (centre_point, init_func_val, f, func_args,
-                         n, m, const_back, back_tol, const_forward,
-                         forward_tol, step, no_vars, region, type_inverse))
+     total_func_evals_dir) = (est_dir.calc_first_phase_RSM_MP
+                              (centre_point, init_func_val, f, func_args,
+                               n, m, const_back, back_tol, const_forward,
+                               forward_tol, step, no_vars, region,
+                               type_inverse))
     assert(upd_point.shape == (m, ))
     assert(f_new < init_func_val)
     assert(total_func_evals_step > 0)
     assert(total_func_evals_dir == n)
-    assert(mean_norm_grad > 0)

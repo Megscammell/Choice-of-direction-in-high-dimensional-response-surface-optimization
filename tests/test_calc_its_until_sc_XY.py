@@ -33,17 +33,16 @@ def test_1():
      total_func_evals_step,
      total_func_evals_dir,
      no_iterations, store_good_dir,
-     store_good_dir_norm, store_good_dir_func,
-     store_norm_grad) = (est_dir.calc_its_until_sc_XY
-                         (centre_point, f, func_args, n, m,
-                          f_no_noise, func_args_no_noise,
-                          no_vars, region, max_func_evals,
-                          const_back, back_tol,
-                          const_forward, forward_tol))
+     store_good_dir_norm,
+     store_good_dir_func) = (est_dir.calc_its_until_sc_XY
+                             (centre_point, f, func_args, n, m,
+                              f_no_noise, func_args_no_noise,
+                              no_vars, region, max_func_evals,
+                              const_back, back_tol,
+                              const_forward, forward_tol))
 
     assert(type(total_func_evals_step) is int)
     assert(type(total_func_evals_dir) is int)
-    assert(type(store_norm_grad) is list)
     assert(upd_point.shape == (m, ))
     assert((total_func_evals_step + total_func_evals_dir) >= max_func_evals)
     assert(no_iterations > 0)
@@ -56,7 +55,7 @@ def test_1():
 
 def test_2():
     """
-    Check outputs are of correct form for calc_its_until_sc with option ='XY' -
+    Check outputs are of correct form for calc_its_until_sc_XY -
     do not enter while loop.
     """
     seed = 3053
@@ -83,14 +82,13 @@ def test_2():
      total_func_evals_step,
      total_func_evals_dir,
      no_iterations, store_good_dir,
-     store_good_dir_norm, store_good_dir_func,
-     store_norm_grad) = (est_dir.calc_its_until_sc_XY
-                         (centre_point, f, func_args, n, m,
-                          f_no_noise, func_args_no_noise,
-                          no_vars, region, max_func_evals,
-                          const_back, back_tol,
-                          const_forward, forward_tol))
-    assert(type(store_norm_grad) is list)
+     store_good_dir_norm,
+     store_good_dir_func) = (est_dir.calc_its_until_sc_XY
+                             (centre_point, f, func_args, n, m,
+                              f_no_noise, func_args_no_noise,
+                              no_vars, region, max_func_evals,
+                              const_back, back_tol,
+                              const_forward, forward_tol))
     assert(type(total_func_evals_step) is int)
     assert(type(total_func_evals_dir) is int)
     assert(upd_point.shape == (m, ))
