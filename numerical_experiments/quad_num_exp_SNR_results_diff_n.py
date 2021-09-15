@@ -24,9 +24,9 @@ def create_boxplots_ratio_2(arr1, arr2, labels, m,
                       positions=np.array(range(len(arr1)))*2.0-0.4)
     bpr = plt.boxplot(arr2.T,
                       positions=np.array(range(len(arr2)))*2.0+0.4)
-    set_box_color(bpl, 'navy')
+    set_box_color(bpl, 'green')
     set_box_color(bpr, 'purple')
-    plt.plot([], c='navy', label=labels[0])
+    plt.plot([], c='green', label=labels[0])
     plt.plot([], c='purple', label=labels[1])
 #     plt.legend(bbox_to_anchor=(0.99, 1.025), loc='upper left',
 #                prop={'size': 22})

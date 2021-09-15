@@ -11,10 +11,10 @@ def mean_good_dir(snr_list, lambda_max_list, good_dir_prop_LS,
                   func_evals_dir_MP, good_dir_prop_XY,
                   good_dir_norm_XY, no_its_XY, func_evals_step_XY,
                   func_evals_dir_XY):
-    mean_good_dir_prop = np.zeros((2, len(lambda_max_list), len(snr_list)))
-    mean_good_dir_norm = np.zeros((2, len(lambda_max_list), len(snr_list)))
-    mean_no_its = np.zeros((2, len(lambda_max_list), len(snr_list)))
-    mean_func_evals = np.zeros((2, len(lambda_max_list), len(snr_list)))
+    mean_good_dir_prop = np.zeros((3, len(lambda_max_list), len(snr_list)))
+    mean_good_dir_norm = np.zeros((3, len(lambda_max_list), len(snr_list)))
+    mean_no_its = np.zeros((3, len(lambda_max_list), len(snr_list)))
+    mean_func_evals = np.zeros((3, len(lambda_max_list), len(snr_list)))
 
     for j in range(len(lambda_max_list)):
         for i in range(len(snr_list)):
@@ -63,7 +63,7 @@ def mean_good_dir(snr_list, lambda_max_list, good_dir_prop_LS,
 
 
 def noise_list_all_lambda_max(lambda_max_list, n, m, function_type):
-    noise_sd = np.zeros((len(lambda_max_list), 4))
+    noise_sd = np.zeros((len(lambda_max_list), 6))
     index = 0
     for lambda_max in lambda_max_list:
         noise_sd[index] = (np.round(np.genfromtxt(
@@ -74,12 +74,12 @@ def noise_list_all_lambda_max(lambda_max_list, n, m, function_type):
     return noise_sd
 
 
-def write_to_latex(arr, title, n, m, function_type, region, const):
+def write_to_latex(arr, title, n, m, function_type, region):
     df = pd.DataFrame(arr)
     df.to_csv(df.to_csv('%s_n=%s_m=%s.csv'
                         % (title, n, m)))
-    with open('%s_n=%s_m=%s_%s_%s_%s.tex' %
-              (title, n, m, function_type, region, const), 'w') as tf:
+    with open('%s_n=%s_m=%s_%s_%s.tex' %
+              (title, n, m, function_type, region), 'w') as tf:
         tf.write(df.to_latex())
 
 
@@ -95,8 +95,7 @@ if __name__ == "__main__":
         save_outputs = None
     else:
         save_outputs = func_evals
-    const = 1
-    snr_list = [2, 3, 5, 10]
+    snr_list = [0.5, 1, 2, 3, 5, 10]
     lambda_max_list = [1, 4, 8]
     no_vars = m
     num_funcs = 100
@@ -227,7 +226,7 @@ if __name__ == "__main__":
 
         fp_norms_MP[lambda_max_index] = (np.genfromtxt(
                                          'fp_norms_MP_n=%s_m=%s_lambda_max'
-                                         '=%s_%s_%s_%s_%s.csv' %
+                                         '=%s_%s_%s_%s_%s_%s.csv' %
                                          (n, m, lambda_max,
                                           no_vars,
                                           type_inverse,
@@ -238,7 +237,7 @@ if __name__ == "__main__":
 
         fp_func_vals_MP[lambda_max_index] = (np.genfromtxt(
                                              'fp_func_vals_MP_n=%s_m=%s_lambda'
-                                             '_max=%s_%s_%s_%s_%s.csv' %
+                                             '_max=%s_%s_%s_%s_%s_%s.csv' %
                                              (n, m, lambda_max,
                                               no_vars,
                                               type_inverse,
@@ -250,7 +249,7 @@ if __name__ == "__main__":
         func_evals_step_MP[lambda_max_index] = (np.genfromtxt(
                                                 'func_evals_step_MP_n=%s_m=%s'
                                                 '_lambda_max=%s_%s_%s'
-                                                '_%s_%s.csv' %
+                                                '_%s_%s_%s.csv' %
                                                 (n, m, lambda_max,
                                                  no_vars,
                                                  type_inverse,
@@ -262,7 +261,7 @@ if __name__ == "__main__":
         func_evals_dir_MP[lambda_max_index] = (np.genfromtxt(
                                                'func_evals_dir_MP_n=%s_m=%s_'
                                                'lambda_max=%s_%s_%s'
-                                               '_%s_%s.csv' %
+                                               '_%s_%s_%s.csv' %
                                                (n, m, lambda_max,
                                                 no_vars,
                                                 type_inverse,
@@ -273,7 +272,7 @@ if __name__ == "__main__":
 
         good_dir_norm_MP[lambda_max_index] = (np.genfromtxt(
                                               'good_dir_norm_MP_n=%s_m=%s_lamb'
-                                              'da_max=%s_%s_%s_%s_%s.csv' %
+                                              'da_max=%s_%s_%s_%s_%s_%s.csv' %
                                               (n, m, lambda_max,
                                                no_vars,
                                                type_inverse,
@@ -284,7 +283,7 @@ if __name__ == "__main__":
 
         good_dir_prop_MP[lambda_max_index] = (np.genfromtxt(
                                               'good_dir_prop_MP_n=%s_m=%s_lamb'
-                                              'da_max=%s_%s_%s_%s_%s.csv' %
+                                              'da_max=%s_%s_%s_%s_%s_%s.csv' %
                                               (n, m, lambda_max,
                                                no_vars,
                                                type_inverse,
@@ -295,7 +294,7 @@ if __name__ == "__main__":
 
         no_its_MP[lambda_max_index] = (np.genfromtxt(
                                        'no_its_MP_n=%s_m=%s_lambda_max=%s_%s'
-                                       '_%s_%s_%s.csv' %
+                                       '_%s_%s_%s_%s.csv' %
                                        (n, m, lambda_max,
                                         no_vars,
                                         type_inverse,
@@ -306,7 +305,7 @@ if __name__ == "__main__":
 
         fp_norms_XY[lambda_max_index] = (np.genfromtxt(
                                          'fp_norms_XY_n=%s_m=%s_lambda_max=%s'
-                                         '_%s_%s_%s.csv' %
+                                         '_%s_%s_%s_%s.csv' %
                                          (n, m, lambda_max,
                                           no_vars,
                                           region,
@@ -316,7 +315,7 @@ if __name__ == "__main__":
 
         fp_func_vals_XY[lambda_max_index] = (np.genfromtxt(
                                              'fp_func_vals_XY_n=%s_m=%s_lambda'
-                                             '_max=%s_%s_%s_%s.csv' %
+                                             '_max=%s_%s_%s_%s_%s.csv' %
                                              (n, m, lambda_max,
                                               no_vars,
                                               region,
@@ -326,7 +325,7 @@ if __name__ == "__main__":
 
         func_evals_step_XY[lambda_max_index] = (np.genfromtxt(
                                                 'func_evals_step_XY_n=%s_m=%s'
-                                                '_lambda_max=%s_%s_%s_%s.csv' %
+                                                '_lambda_max=%s_%s_%s_%s_%s.csv' %
                                                 (n, m, lambda_max,
                                                  no_vars,
                                                  region,
@@ -336,7 +335,7 @@ if __name__ == "__main__":
 
         func_evals_dir_XY[lambda_max_index] = (np.genfromtxt(
                                                'func_evals_dir_XY_n=%s_m=%s'
-                                               '_lambda_max=%s_%s_%s_%s.csv' %
+                                               '_lambda_max=%s_%s_%s_%s_%s.csv' %
                                                (n, m, lambda_max,
                                                 no_vars,
                                                 region,
@@ -346,7 +345,7 @@ if __name__ == "__main__":
 
         good_dir_norm_XY[lambda_max_index] = (np.genfromtxt(
                                               'good_dir_norm_XY_n=%s_m=%s_lamb'
-                                              'da_max=%s_%s_%s_%s.csv' %
+                                              'da_max=%s_%s_%s_%s_%s.csv' %
                                               (n, m, lambda_max,
                                                no_vars,
                                                region,
@@ -356,7 +355,7 @@ if __name__ == "__main__":
 
         good_dir_prop_XY[lambda_max_index] = (np.genfromtxt(
                                               'good_dir_prop_XY_n=%s_m=%s_la'
-                                              'mbda_max=%s_%s_%s_%s.csv' %
+                                              'mbda_max=%s_%s_%s_%s_%s.csv' %
                                               (n, m, lambda_max,
                                                no_vars,
                                                region,
@@ -366,7 +365,7 @@ if __name__ == "__main__":
 
         no_its_XY[lambda_max_index] = (np.genfromtxt(
                                        'no_its_XY_n=%s_m=%s_lambda_max=%s_%s'
-                                       '_%s_%s.csv' %
+                                       '_%s_%s_%s.csv' %
                                        (n, m, lambda_max,
                                         no_vars,
                                         region,
@@ -388,13 +387,14 @@ if __name__ == "__main__":
         lambda_max_index += 1
 
     arr_mean_dir = mean_good_dir(snr_list, lambda_max_list, good_dir_prop_LS,
-                                 good_dir_norm_LS, no_its_LS,
-                                 func_evals_step_LS, func_evals_dir_LS,
-                                 good_dir_prop_XY, good_dir_norm_XY, no_its_XY,
-                                 func_evals_step_XY, func_evals_dir_XY)
-    write_to_latex(arr_mean_dir, snr_list, lambda_max_list, 'mean_good_dir',
-                   n, m, function_type, region, const)
+                                 good_dir_norm_LS, no_its_LS, func_evals_step_LS,
+                                 func_evals_dir_LS, good_dir_prop_MP,
+                                 good_dir_norm_MP, no_its_MP, func_evals_step_MP,
+                                 func_evals_dir_MP, good_dir_prop_XY,
+                                 good_dir_norm_XY, no_its_XY, func_evals_step_XY,
+                                 func_evals_dir_XY)
+    write_to_latex(arr_mean_dir, 'mean_good_dir',
+                   n, m, function_type, region)
 
     noise_sd = noise_list_all_lambda_max(lambda_max_list, n, m, function_type)
-
-    write_to_latex(noise_sd, 'noise_sd', n, m, function_type, region, const)
+    write_to_latex(noise_sd, 'noise_sd', n, m, function_type, region)
