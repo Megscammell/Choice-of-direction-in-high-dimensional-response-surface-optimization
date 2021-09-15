@@ -14,9 +14,9 @@ from .PI_LS import calc_first_phase_RSM_LS
 from .PI_LS import compute_direction_LS
 from .PI_XY import calc_first_phase_RSM_XY
 from .PI_XY import compute_direction_XY
-from .PI_MP import calc_first_phase_RSM_MP
-from .PI_MP import compute_direction_MP
-from .PI_MP import calc_its_until_sc_MP
+from .PI_MPI import calc_first_phase_RSM_MP
+from .PI_MPI import compute_direction_MP
+from .PI_MPI import calc_its_until_sc_MP
 from .compute_random_design import compute_random_design
 from .compute_random_design import compute_shuffle_cols
 from .forward_backward_tracking import backward_tracking

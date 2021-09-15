@@ -55,11 +55,20 @@ def compute_direction_MP(n, m, centre_point, f, func_args, no_vars, region,
     full_act_design[:, 1:] = act_design
     direction = np.zeros((m,))
     if type_inverse == 'left':
-        est = (np.linalg.pinv(full_act_design.T @ full_act_design) @
-               full_act_design.T @ y)
+        if n == m:
+            est = (np.linalg.pinv(full_act_design.T @ full_act_design, 0.025) @
+                                  full_act_design.T @ y)
+        else:
+            est = (np.linalg.pinv(full_act_design.T @ full_act_design) @
+                                  full_act_design.T @ y)
     elif type_inverse == 'right':
-        est = (full_act_design.T @
-               np.linalg.pinv(full_act_design @ full_act_design.T) @ y)
+        if n == m:
+            est = (full_act_design.T @
+                   np.linalg.pinv(full_act_design @ full_act_design.T, 0.025) @
+                   y)
+        else:
+            est = (full_act_design.T @
+                   np.linalg.pinv(full_act_design @ full_act_design.T) @ y)
     direction[positions] = est_dir.divide_abs_max_value(est[1:])
     assert(max(abs(direction) == 1))
     return direction, func_evals

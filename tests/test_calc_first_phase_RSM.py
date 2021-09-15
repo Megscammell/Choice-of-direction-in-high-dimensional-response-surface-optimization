@@ -507,3 +507,61 @@ def test_16():
     assert(f_new < init_func_val)
     assert(total_func_evals_step > 0)
     assert(total_func_evals_dir == n)
+
+
+def test_17():
+    """
+    Test outputs of compute_direction_MP() - type_inverse = 'left'
+    and n = m.
+    """
+    np.random.seed(91)
+    n = 100
+    m = 100
+    no_vars = m
+    f = est_dir.quad_f_noise
+    minimizer = np.ones((m,))
+    centre_point = np.random.uniform(-2, 2, (m,))
+    matrix = est_dir.quad_func_params(1, 1, m)
+    func_args = (minimizer, matrix, 0, 1)
+    region = 0.1
+    type_inverse = 'left'
+    direction, func_evals = (est_dir.compute_direction_MP
+                             (n, m, centre_point, f, func_args,
+                              no_vars, region, type_inverse))
+    assert(func_evals == n)
+    assert(direction.shape == (m,))
+    assert(np.where(direction != 0)[0].shape[0] == no_vars)
+    assert(np.max(abs(direction)) == 1)
+    pos_max = np.argmax(direction)
+    for j in range(no_vars):
+        if j != pos_max:
+            assert(abs(direction[j]) <= 1)
+    
+
+def test_18():
+    """
+    Test outputs of compute_direction_MP() - type_inverse = 'right'
+    and n = m.
+    """
+    np.random.seed(91)
+    n = 100
+    m = 100
+    no_vars = m
+    f = est_dir.quad_f_noise
+    minimizer = np.ones((m,))
+    centre_point = np.random.uniform(-2, 2, (m,))
+    matrix = est_dir.quad_func_params(1, 1, m)
+    func_args = (minimizer, matrix, 0, 1)
+    region = 0.1
+    type_inverse = 'right'
+    direction, func_evals = (est_dir.compute_direction_MP
+                             (n, m, centre_point, f, func_args,
+                              no_vars, region, type_inverse))
+    assert(func_evals == n)
+    assert(direction.shape == (m,))
+    assert(np.where(direction != 0)[0].shape[0] == no_vars)
+    assert(np.max(abs(direction)) == 1)
+    pos_max = np.argmax(direction)
+    for j in range(no_vars):
+        if j != pos_max:
+            assert(abs(direction[j]) <= 1)
