@@ -3,13 +3,13 @@
 [![codecov](https://codecov.io/gh/Megscammell/Estimate-of-direction-in-RSM/branch/main/graph/badge.svg?token=HMOJXTZXV4)](https://codecov.io/gh/Megscammell/Estimate-of-direction-in-RSM)
 [![Documentation Status](https://readthedocs.org/projects/estimate-of-direction-in-rsm/badge/?version=latest)](https://estimate-of-direction-in-rsm.readthedocs.io/en/latest/?badge=latest)
 
-Response surface methodology (RSM) is used to approximate a minimizer of a response function from a series of observations that contain errors. The first phase of RSM involves constructing a linear model, whose coefficients are used to determine the search direction for steepest descent. However, if the number of variables is large, it can be computationally expensive to approximate the search direction. Hence, an alternative search direction is proposed in order to improve the efficiency and accuracy of the first phase of RSM when the number of variables is large.
+Response surface methodology (RSM) is used to approximate a minimizer of a response function from a series of observations that contain errors. The first phase of RSM involves constructing a linear model, whose coefficients are used to determine the search direction for steepest descent. However, if the number of variables is large, it can be computationally expensive to approximate the search direction. Hence, an alternative search direction is proposed to improve the efficiency and accuracy of the first phase of RSM when the number of variables is large.
 
 ## Documentation
 Documentation for Estimate-of-direction-in-RSM can be found at https://estimate-of-direction-in-rsm.readthedocs.io/.
 
 ## Installation
-To install and test the the Estimate-of-direction-in-RSM source code, type the following into the command line:
+To install and test the Estimate-of-direction-in-RSM source code, type the following into the command line:
 
 ```console
 $ git clone https://github.com/Megscammell/Estimate-of-direction-in-RSM.git
@@ -59,7 +59,6 @@ Apply the first phase of RSM with an alternative search direction for large dime
 >>> assert(np.linalg.norm(starting_point - minimizer) >
 ...        np.linalg.norm(final_point - minimizer))
 >>> assert(sp_func_val > fp_func_val)
->>> assert(func_evals_step + func_evals_dir <= max_func_evals)
 
 ```
 

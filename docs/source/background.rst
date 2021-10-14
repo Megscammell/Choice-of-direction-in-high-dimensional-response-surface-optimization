@@ -45,8 +45,8 @@ The most often cited RSM strategy is the Box-Wilson algorithm (see :cite:`box195
 The first phase checks whether :math:`\eta(x)` is approximately linear in the neighbourhood of :math:`x^{(k)}`. If so, a local linear model is constructed
 using a fractional factorial design centred at :math:`x^{(k)}` and the response function values at each observation of the design matrix. The coefficients
 :math:`\hat{\theta} = (\hat{\theta}_0,\hat{\theta}_1,....,\hat{\theta}_d)` of the local linear model are computed using least-squares. If the local linear model is significant then the search direction is
-:math:`s^{(k)} = (\hat{\theta}_1,....,\hat{\theta}_d)`, :math:`x^{(k+1)}` is obtained by applying :eq:`sd` and :math:`k \gets k + 1`. The first phase of RSM is repeated with new point :math:`x^{(k)}`.
-Otherwise, if the linear model is insignificant, then the second phase of RSM is applied.
+:math:`s^{(k)} = (\hat{\theta}_1,....,\hat{\theta}_d)`. Then :math:`x^{(k+1)}` is obtained by applying :eq:`sd` and we set :math:`k \gets k + 1`. The first phase of RSM is repeated with new point :math:`x^{(k)}`.
+Otherwise, if the linear model is insignificant, the second phase of RSM is applied.
 That is, a second-order model is required, and the choice of design is changed accordingly.
 The focus throughout will be on the first phase of RSM and, in particular, the choice of search direction :math:`s^{(k)}`.
 
@@ -77,5 +77,5 @@ Furthermore, suppose :math:`Y` contains the response function values at each obs
     s^{(k)} = M^TY
 
 The advantage of using search directions of form :eq:`search_1` is that all variables of :math:`x^{(k)}` can be updated simultaneously. Furthermore, numerical comparisons show that search directions of form
-:eq:`search_1` are more accurate than using search directions discussed in :ref:`LS <search_LS>` when the dimension is large. The code and outputs for numerical comparisons can be found at
+:eq:`search_1` are more accurate than using search directions discussed in :ref:`LS <search_LS>` for large dimensions. The code and outputs for numerical comparisons can be found at
 https://github.com/Megscammell/Estimate-of-direction-in-RSM/tree/main/numerical_experiments.

@@ -67,7 +67,6 @@ An example of applying the first phase of RSM with a noisy quadratic response fu
    >>> assert(np.linalg.norm(starting_point - minimizer) >
    ...        np.linalg.norm(final_point - minimizer))
    >>> assert(sp_func_val > fp_func_val)
-   >>> assert(func_evals_step + func_evals_dir <= max_func_evals)
 
 The purpose of each line of code within the example is discussed in the following table.
 
@@ -86,7 +85,7 @@ The purpose of each line of code within the example is discussed in the followin
    * - 6
      - Set the number of variables to update to :bash:`no_vars = d`.	
    * - 7
-     - The number of observations of the design matrix is set to :bash:`N = 16`.
+     - The number of observations of the design matrix is set to :bash:`n = 16`.
    * - 8
      - Set the region of exploration to :bash:`region = 0.1`. 
    * - 9
@@ -105,7 +104,7 @@ The purpose of each line of code within the example is discussed in the followin
      - Set :bash:`minimizer`, :bash:`A`, :bash:`mu=0` and :bash:`sd=0.5` as response function arguments. The arguments are required to run :bash:`f`.
    * - 25 - 33
      - Run the first phase of RSM with alternative search direction with specified input parameters.
-   * - 34 - 37
+   * - 34 - 36
      - Check outputs of the first phase of RSM with alternative search direction.
 
 Additional examples

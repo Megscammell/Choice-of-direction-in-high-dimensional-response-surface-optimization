@@ -11,7 +11,7 @@ Welcome to the documentation for Estimate-of-direction-in-RSM
    :alt: Documentation Status
 
 
-Response surface methodology (RSM) can be applied to approximate a minimizer of a response function from a series of observations that contain errors.
+Response surface methodology (RSM) can approximate a minimizer of a response function from a series of observations containing errors.
 The first phase of RSM involves constructing a linear model, whose coefficients are used to determine the search direction for steepest descent.
 However, if there are many variables, it can be computationally expensive to approximate the search direction.
 Hence, an alternative search direction is proposed to improve the efficiency and accuracy of the first phase of RSM when the dimension is large.

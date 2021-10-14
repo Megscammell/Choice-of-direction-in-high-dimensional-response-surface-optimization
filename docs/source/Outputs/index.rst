@@ -9,11 +9,11 @@ List of available results
 
 The table below contains details of the outputs from :bash:`alternative_search_direction()`.
 
-.. list-table:: Outputs of :bash:`alternative_search_direction()`
+.. list-table::
    :widths: 25 25 50
    :header-rows: 1
 
-   * - Ouput
+   * - Output
      - Type
      - Description
    * - :bash:`upd_point`
