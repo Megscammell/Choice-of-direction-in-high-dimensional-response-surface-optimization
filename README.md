@@ -2,6 +2,7 @@
 [![CI](https://github.com/Megscammell/Estimate-of-direction-in-RSM/actions/workflows/config.yml/badge.svg)](https://github.com/Megscammell/Estimate-of-direction-in-RSM/actions/workflows/config.yml)
 [![codecov](https://codecov.io/gh/Megscammell/Estimate-of-direction-in-RSM/branch/main/graph/badge.svg?token=HMOJXTZXV4)](https://codecov.io/gh/Megscammell/Estimate-of-direction-in-RSM)
 [![Documentation Status](https://readthedocs.org/projects/estimate-of-direction-in-rsm/badge/?version=latest)](https://estimate-of-direction-in-rsm.readthedocs.io/en/latest/?badge=latest)
+[![DOI](https://zenodo.org/badge/339388391.svg)](https://zenodo.org/badge/latestdoi/339388391)
 
 Response surface methodology (RSM) is used to approximate a minimizer of a response function from a series of observations that contain errors. The first phase of RSM involves constructing a linear model, whose coefficients are used to determine the search direction for steepest descent. However, if the number of variables is large, it can be computationally expensive to approximate the search direction. Hence, an alternative search direction is proposed to improve the efficiency and accuracy of the first phase of RSM when the number of variables is large.
 

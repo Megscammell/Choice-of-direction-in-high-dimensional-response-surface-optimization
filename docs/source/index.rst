@@ -10,6 +10,9 @@ Welcome to the documentation for Estimate-of-direction-in-RSM
    :target: https://estimate-of-direction-in-rsm.readthedocs.io/en/latest/?badge=latest
    :alt: Documentation Status
 
+.. image:: https://zenodo.org/badge/339388391.svg
+   :target: https://zenodo.org/badge/latestdoi/339388391
+
 
 Response surface methodology (RSM) can approximate a minimizer of a response function from a series of observations containing errors.
 The first phase of RSM involves constructing a linear model, whose coefficients are used to determine the search direction for steepest descent.
