@@ -17,6 +17,7 @@ def set_box_color(bp, color):
 def create_boxplots_ratio_2(arr1, arr2, labels, m, n, lambda_max, title, ticks,
                             no_vars, range_1, range_2, region, function_type,
                             func_evals):
+    """Create boxplots."""
     plt.figure(figsize=(5, 5))
     plt.ylim(range_1, range_2)
     bpl = plt.boxplot(arr1.T,
@@ -27,8 +28,6 @@ def create_boxplots_ratio_2(arr1, arr2, labels, m, n, lambda_max, title, ticks,
     set_box_color(bpr, 'purple')
     plt.plot([], c='navy', label=labels[0])
     plt.plot([], c='purple', label=labels[1])
-    # plt.legend(bbox_to_anchor=(0.99, 1.025), loc='upper left',
-    #            prop={'size': 22})
     plt.xlabel(r'SNR', size=14)
     plt.xticks(np.arange(0, len(ticks) * 2, 2), ticks, size=15)
     plt.yticks(fontsize=14)
@@ -42,6 +41,7 @@ def create_boxplots_ratio_2(arr1, arr2, labels, m, n, lambda_max, title, ticks,
 def create_boxplots_ratio_3(arr1, arr2, arr3, labels, m, n, lambda_max, title,
                             ticks, no_vars, range_1, range_2, region,
                             function_type, func_evals):
+    """Create boxplots."""
     plt.figure(figsize=(5, 5))
     plt.ylim(range_1, range_2)
     bpl = plt.boxplot(arr1.T,
@@ -56,8 +56,6 @@ def create_boxplots_ratio_3(arr1, arr2, arr3, labels, m, n, lambda_max, title,
     plt.plot([], c='green', label=labels[0])
     plt.plot([], c='navy', label=labels[1])
     plt.plot([], c='purple', label=labels[2])
-    # plt.legend(bbox_to_anchor=(0.99, 1.025), loc='upper left',
-    #            prop={'size': 22})
     plt.xlabel(r'SNR', size=14)
     plt.xticks(np.arange(0, len(ticks) * 3, 3), ticks, size=15)
     plt.yticks(fontsize=14)
@@ -70,6 +68,7 @@ def create_boxplots_ratio_3(arr1, arr2, arr3, labels, m, n, lambda_max, title,
 def create_scatter_plot(arr1, arr2, arr1_title, arr2_title, labels_legend,
                         title, m, n, lambda_max, no_vars, max_num,
                         region, function_type, func_evals):
+    """Create scatter plots."""
     plt.figure(figsize=(7, 5))
     plt.ylim(-0.1, max_num)
     plt.xlim(-0.1, max_num)
@@ -163,7 +162,6 @@ if __name__ == "__main__":
                         save_outputs),
                        delimiter=','))
 
-
     fp_norms_XY = (np.genfromtxt(
                    'fp_norms_XY_n=%s_m=%s_lambda_max=%s_%s'
                    '_%s_%s_%s.csv' %
@@ -239,7 +237,7 @@ if __name__ == "__main__":
         create_boxplots_ratio_2(fp_norms_LS/sp_norms,
                                 fp_norms_XY/sp_norms,
                                 [labels[2][0], labels[2][2]], m, n, lambda_max,
-                               'norms_LS_XY', snr_list, no_vars, -0.01,
+                                'norms_LS_XY', snr_list, no_vars, -0.01,
                                 range_2_norm_LS_XY, region, function_type,
                                 save_outputs)
 

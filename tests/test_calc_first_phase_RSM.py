@@ -536,7 +536,7 @@ def test_17():
     for j in range(no_vars):
         if j != pos_max:
             assert(abs(direction[j]) <= 1)
-    
+
 
 def test_18():
     """

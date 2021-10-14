@@ -11,6 +11,91 @@ def mean_good_dir(snr_list, lambda_max_list, good_dir_prop_LS,
                   func_evals_dir_MP, good_dir_prop_XY,
                   good_dir_norm_XY, no_its_XY, func_evals_step_XY,
                   func_evals_dir_XY):
+    """
+    Generate results focusing on the number of 'good' directions computed
+    by various methods.
+
+    Parameters
+    ----------
+    snr_list : list
+               Contains signal to noise ratios.
+    lambda_max_list : list
+                      Contains a range of largest eigenvalues of the positive
+                      definite matrix used to compute the quadratic response
+                      function.
+    good_dir_no_its_prop_LS : 2-D array
+                              Total number of 'good' directions produced by
+                              PI_LS. That is, a 'good' direction is when the
+                              response function value has improved by
+                              moving along the direction.
+    good_dir_norm_LS : 2-D array
+                       If a 'good' direction is determined for PI_LS,
+                       distance of point and minimizer at the k-th
+                       iteration subtracted by the distance of point
+                       and minimizer at the (k+1)-th iteration is
+                       measured. Then an average of all distances is stored.
+    no_its_LS : 2-D array
+                Total number of iterations of PI_LS until some stopping
+                criterion is met for Phase I of RSM.
+    func_evals_step_LS : 2-D array
+                         Total number of function evaluations taken by PI_LS
+                         to compute step length until some stopping criterion
+                         is met for Phase I of RSM.
+    func_evals_dir_LS : 2-D array
+                        Total number of function evaluations taken by PI_LS
+                        to compute direction until some stopping criterion
+                        is met for Phase I of RSM.
+    good_dir_no_its_prop_MP : 2-D array
+                              Total number of 'good' directions produced by
+                              PI_MPI. That is, a 'good' direction is when the
+                              response function value has improved by
+                              moving along the direction.
+    good_dir_norm_MP : 2-D array
+                       If a 'good' direction is determined for PI_MPI,
+                       distance of point and minimizer at the k-th
+                       iteration subtracted by the distance of point
+                       and minimizer at the (k+1)-th iteration is
+                       measured. Then an average of all distances is stored.
+    no_its_MP : 2-D array
+                Total number of iterations of PI_MPI until some stopping
+                criterion is met for Phase I of RSM.
+    func_evals_step_MP : 2-D array
+                         Total number of function evaluations taken by PI_MPI
+                         to compute step length until some stopping criterion
+                         is met for Phase I of RSM.
+    func_evals_dir_MP : 2-D array
+                        Total number of function evaluations taken by PI_MPI
+                        to compute direction until some stopping criterion
+                        is met for Phase I of RSM.
+    good_dir_no_its_prop_XY : 2-D array
+                              Total number of 'good' directions produced by
+                              PI_XY. That is, a 'good' direction is when the
+                              response function value has improved by
+                              moving along the direction.
+    good_dir_norm_XY : 2-D array
+                       If a 'good' direction is determined for PI_XY,
+                       distance of point and minimizer at the k-th
+                       iteration subtracted by the distance of point
+                       and minimizer at the (k+1)-th iteration is
+                       measured. Then an average of all distances is stored.
+    no_its_XY : 2-D array
+                Total number of iterations of PI_XY until some stopping
+                criterion is met for Phase I of RSM.
+    func_evals_step_XY : 2-D array
+                         Total number of function evaluations taken by PI_XY
+                         to compute step length until some stopping criterion
+                         is met for Phase I of RSM.
+    func_evals_dir_XY : 2-D array
+                        Total number of function evaluations taken by PI_XY
+                        to compute direction until some stopping criterion
+                        is met for Phase I of RSM.
+
+    Returns
+    -------
+    arr : 2D array
+          Store all relevant results for various lambda_max and snr.
+    """
+
     mean_good_dir_prop = np.zeros((3, len(lambda_max_list), len(snr_list)))
     mean_good_dir_norm = np.zeros((3, len(lambda_max_list), len(snr_list)))
     mean_no_its = np.zeros((3, len(lambda_max_list), len(snr_list)))
@@ -63,6 +148,29 @@ def mean_good_dir(snr_list, lambda_max_list, good_dir_prop_LS,
 
 
 def noise_list_all_lambda_max(lambda_max_list, n, m, function_type):
+    """
+    Obtain all standard deviations of errors used to compute noisy
+    function values.
+
+    Parameters
+    ----------
+    lambda_max_list : list
+                      Contains a range of largest eigenvalues of the positive
+                      definite matrix used to compute the quadratic response
+                      function.
+    n : integer
+        Number of observations for design matrix.
+    m : integer
+        Number of variables.
+    function_type : string
+                    Either function_type = 'quad', 'sqr_quad' or
+                    'squ_quad'.
+    Returns
+    -------
+    noise_sd : 2D array
+               Store all standard deviations of errors used to compute noisy
+               function values.
+    """
     noise_sd = np.zeros((len(lambda_max_list), 6))
     index = 0
     for lambda_max in lambda_max_list:
@@ -75,6 +183,26 @@ def noise_list_all_lambda_max(lambda_max_list, n, m, function_type):
 
 
 def write_to_latex(arr, title, n, m, function_type, region):
+    """
+    Write outputs to latex.
+
+    Parameters
+    ----------
+    arr: array
+         Convert arr to a Pandas dataframe and then write to latex.
+    title : string
+            Name of saved outputs.
+    n : integer
+        Number of observations for design matrix.
+    m : integer
+        Number of variables
+    function_type : string
+                    Either function_type = 'quad', 'sqr_quad' or
+                    'squ_quad'.
+    region : float
+             Region of exploration around the centre point.
+
+    """
     df = pd.DataFrame(arr)
     df.to_csv(df.to_csv('%s_n=%s_m=%s.csv'
                         % (title, n, m)))
@@ -325,7 +453,8 @@ if __name__ == "__main__":
 
         func_evals_step_XY[lambda_max_index] = (np.genfromtxt(
                                                 'func_evals_step_XY_n=%s_m=%s'
-                                                '_lambda_max=%s_%s_%s_%s_%s.csv' %
+                                                '_lambda_max=%s_%s_%s_%s'
+                                                '_%s.csv' %
                                                 (n, m, lambda_max,
                                                  no_vars,
                                                  region,
@@ -335,7 +464,8 @@ if __name__ == "__main__":
 
         func_evals_dir_XY[lambda_max_index] = (np.genfromtxt(
                                                'func_evals_dir_XY_n=%s_m=%s'
-                                               '_lambda_max=%s_%s_%s_%s_%s.csv' %
+                                               '_lambda_max=%s_%s_%s_%s'
+                                               '_%s.csv' %
                                                (n, m, lambda_max,
                                                 no_vars,
                                                 region,
@@ -387,12 +517,12 @@ if __name__ == "__main__":
         lambda_max_index += 1
 
     arr_mean_dir = mean_good_dir(snr_list, lambda_max_list, good_dir_prop_LS,
-                                 good_dir_norm_LS, no_its_LS, func_evals_step_LS,
-                                 func_evals_dir_LS, good_dir_prop_MP,
-                                 good_dir_norm_MP, no_its_MP, func_evals_step_MP,
-                                 func_evals_dir_MP, good_dir_prop_XY,
-                                 good_dir_norm_XY, no_its_XY, func_evals_step_XY,
-                                 func_evals_dir_XY)
+                                 good_dir_norm_LS, no_its_LS,
+                                 func_evals_step_LS, func_evals_dir_LS,
+                                 good_dir_prop_MP, good_dir_norm_MP, no_its_MP,
+                                 func_evals_step_MP, func_evals_dir_MP,
+                                 good_dir_prop_XY, good_dir_norm_XY, no_its_XY,
+                                 func_evals_step_XY, func_evals_dir_XY)
     write_to_latex(arr_mean_dir, 'mean_good_dir',
                    n, m, function_type, region)
 

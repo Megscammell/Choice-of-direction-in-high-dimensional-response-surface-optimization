@@ -57,10 +57,10 @@ def compute_direction_MP(n, m, centre_point, f, func_args, no_vars, region,
     if type_inverse == 'left':
         if n == m:
             est = (np.linalg.pinv(full_act_design.T @ full_act_design, 0.025) @
-                                  full_act_design.T @ y)
+                   full_act_design.T @ y)
         else:
             est = (np.linalg.pinv(full_act_design.T @ full_act_design) @
-                                  full_act_design.T @ y)
+                   full_act_design.T @ y)
     elif type_inverse == 'right':
         if n == m:
             est = (full_act_design.T @

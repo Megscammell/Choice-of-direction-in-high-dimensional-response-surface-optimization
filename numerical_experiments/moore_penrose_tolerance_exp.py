@@ -4,6 +4,25 @@ import matplotlib.pyplot as plt
 
 
 def check_tolerance(s, const):
+    """
+    Checks the number of eigenvalues from SVD which are greater than some
+    tolerance.
+
+    Parameters
+    ----------
+    s :   1-D array
+          Eigenvalues from SVD
+    const : float
+            To obtain the tolerance, multiply the largest eigenvalue in s
+            by const.
+
+    Return
+    -------
+    s[pos] : 1-D array
+             The eigenvalues greater than tolerance.
+    count : integer
+            Number of eigenvalues less than tolerance.
+    """
     tol = np.max(s) * const
     pos = np.where(abs(s) > tol)[0]
     count = s.shape[0] - np.where(abs(s) > tol)[0].shape[0]
@@ -11,6 +30,19 @@ def check_tolerance(s, const):
 
 
 def create_boxplots_MP(min_eig, const_list):
+    """
+    Boxplots of the smallest eigenvalue greater than tolerance.
+
+    Parameters
+    ----------
+    min_eig : 3D array
+              Smallest eigenvalues that are larger than tolerance
+              for each starting point with different n and const.
+    const_list : float
+                 To obtain the tolerance, multiply the largest eigenvalue in s
+                 by const.
+
+    """
     plt.figure(figsize=(5, 5))
     for j in range(len(min_eig)):
         plt.clf()
@@ -28,6 +60,24 @@ def create_boxplots_MP(min_eig, const_list):
 
 
 def mean_no_eigs_removed(count_eigs_removed, const_list, n_list):
+    """
+    Save the mean number of eigenvalues less than some tolerance. For n = 50
+    and n = 200, the number of eigenvalues less than some tolerance is the same
+    for each starting point.
+
+    Parameters
+    ----------
+    count_eigs_removed : 3D array
+                         Number of eigenvalues less than tolerance
+                         for each starting point with n=(50,100,200)
+                         and m=100.
+    const_list : float
+                 To obtain the tolerance, multiply the largest eigenvalue in s
+                 by const.
+    n_list : list
+             Contains a range of values for n.
+
+    """
     store_means = np.zeros((len(const_list), len(n_list)))
 
     for j in range(len(const_list)):
@@ -37,19 +87,29 @@ def mean_no_eigs_removed(count_eigs_removed, const_list, n_list):
             elif i == 2:
                 assert(np.all(count_eigs_removed[j, i] == 0))
             store_means[j, i] = np.mean(count_eigs_removed[j, i])
-    np.savetxt('store_mean_number_eigenvalues_removed_MP_tol.csv', store_means, delimiter=',')
+    np.savetxt('store_mean_number_eigenvalues_removed_MP_tol.csv',
+               store_means, delimiter=',')
 
 
 if __name__ == "__main__":
+    """
+    Checks the number of eigenvalues from SVD which are less than some
+    tolerance.
+    It can be shown that when n = m, the number of eigenvalues less than the
+    tolerance increases as the tolerance increases.
+    This is not the case when n != m.
+    Hence, to use the Moore-Penrose inverse for n = m, very small
+    eigenvalues will need to be set to zero. Not doing this will result
+    in poor search directions computed by PI_MPI.
+    """
     seed = 100
     m = 100
     n_list = [50, 100, 200]
     const_list = [0.000000000000001, 0.001, 0.01, 0.025]
     min_eig = np.zeros((len(const_list), len(n_list), 100))
-    count_eigs_removed = np.zeros((len(const_list),len(n_list), 100))
+    count_eigs_removed = np.zeros((len(const_list), len(n_list), 100))
     no_vars = m
     region = 0.1
-    const = 1
     cov = np.identity((m))
     lambda_max = 1
     noise_sd = 1

@@ -17,7 +17,7 @@ def create_boxplots_ratio_2(arr1, arr2, labels, m,
                             range_1, range_2, region,
                             function_type, snr_list,
                             snr_pos, func_evals):
-
+    """Create boxplots."""
     plt.figure(figsize=(5, 5))
     plt.ylim(range_1, range_2)
     bpl = plt.boxplot(arr1.T,
@@ -28,8 +28,6 @@ def create_boxplots_ratio_2(arr1, arr2, labels, m,
     set_box_color(bpr, 'purple')
     plt.plot([], c='green', label=labels[0])
     plt.plot([], c='purple', label=labels[1])
-#     plt.legend(bbox_to_anchor=(0.99, 1.025), loc='upper left',
-#                prop={'size': 22})
     plt.xlabel(r'$N$', size=14)
     plt.xticks(np.arange(0, len(ticks) * 2, 2), ticks, size=15)
     plt.yticks(fontsize=14)

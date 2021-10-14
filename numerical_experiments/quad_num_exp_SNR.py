@@ -2,11 +2,24 @@ import sys
 
 import numpy as np
 import est_dir
-import matplotlib.pyplot as plt
-import seaborn as sns
 
 
 if __name__ == "__main__":
+    """
+    To obtain the same results as in thesis, set input parameters
+    to the following:
+
+    n : set to either 16, 32, 50, 100 or 200.
+    m : 100.
+    lambda_max : set lambda_max to be either 1, 4 or 8.
+    region : 0.1.
+    function_type : set function_type to be either 'quad' or 'sqr_quad'.
+    type_inverse : set either as 'right' or 'left'. Will obtain same results.
+    func_evals : can either set to 0 which will mean PI_LS will be run first to
+                 determine the total number of function evaluations to use
+                 for PI_MPI and PI_XY.
+                 Can also set to 500 and 2000 for PI_MPI and PI_XY.
+    """
     n = int(sys.argv[1])
     m = int(sys.argv[2])
     lambda_max = int(sys.argv[3])

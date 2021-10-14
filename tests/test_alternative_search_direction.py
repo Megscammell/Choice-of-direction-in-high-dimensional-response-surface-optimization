@@ -252,7 +252,7 @@ def test_8():
           const_back, back_tol,
           const_forward, forward_tol))
 
-    
+
 def test_9():
     """
     Check error message if max_func_evals is not integer.
