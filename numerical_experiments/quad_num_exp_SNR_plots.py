@@ -97,8 +97,7 @@ if __name__ == "__main__":
     lambda_max = int(sys.argv[3])
     region = float(sys.argv[4])
     function_type = str(sys.argv[5])
-    type_inverse = str(sys.argv[6])
-    func_evals = int(sys.argv[7])
+    func_evals = int(sys.argv[6])
 
     if function_type == 'quad':
         f = est_dir.quad_f_noise
@@ -142,10 +141,9 @@ if __name__ == "__main__":
                            delimiter=','))
 
     fp_norms_MP = (np.genfromtxt(
-                   'fp_norms_MP_n=%s_m=%s_lambda_max=%s_%s_%s_%s_%s_%s.csv' %
+                   'fp_norms_MP_n=%s_m=%s_lambda_max=%s_%s_%s_%s_%s.csv' %
                    (n, m, lambda_max,
                     no_vars,
-                    type_inverse,
                     region,
                     function_type,
                     save_outputs),
@@ -153,10 +151,9 @@ if __name__ == "__main__":
 
     fp_func_vals_MP = (np.genfromtxt(
                        'fp_func_vals_MP_n=%s_m=%s_lambda_max=%s_%s'
-                       '_%s_%s_%s_%s.csv' %
+                       '_%s_%s_%s.csv' %
                        (n, m, lambda_max,
                         no_vars,
-                        type_inverse,
                         region,
                         function_type,
                         save_outputs),

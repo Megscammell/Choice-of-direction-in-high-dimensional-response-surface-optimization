@@ -211,7 +211,7 @@ if __name__ == "__main__":
 
     (XY_gr_LS_norms,
      XY_gr_LS_func) = compute_no_times_XY_gr_LS(lambda_max_list, snr_list,
-                                                num_funcs, fp_norms_LS,
+                                                fp_norms_LS,
                                                 fp_norms_XY, fp_func_vals_LS,
                                                 fp_func_vals_XY)
     bar_charts(XY_gr_LS_norms[:, 0], XY_gr_LS_norms[:, 1],

@@ -5,7 +5,7 @@ import pandas as pd
 
 
 def compute_avg_func_evals(lambda_max_list, n_list, m, no_vars,
-                           type_inverse, save_outputs):
+                           save_outputs):
     """
     Compute average function evaluations for PI_MPI and PI_XY with
     SNR = (0.5, 2).
@@ -30,9 +30,6 @@ def compute_avg_func_evals(lambda_max_list, n_list, m, no_vars,
               centre_point in which to centre the design matrix.
               a tuple of arguments needed to compute the response function
               value.
-    type_inverse : string
-                   Determine whether to perform a left or right inverse for
-                   PI-MP.
     save_outputs : integer or None
                    Number of function evaluations if PI_MPI and PI_XY are
                    applied. Otherwise set to None if PI_LS is also applied.
@@ -53,10 +50,9 @@ def compute_avg_func_evals(lambda_max_list, n_list, m, no_vars,
             func_evals_step_MP = (np.genfromtxt(
                                  'func_evals_step_MP_n=%s_m=%s'
                                  '_lambda_max=%s_%s_%s'
-                                 '_%s_%s_%s.csv' %
+                                 '_%s_%s.csv' %
                                  (n, m, lambda_max,
                                   no_vars,
-                                  type_inverse,
                                   region,
                                   function_type,
                                   save_outputs),
@@ -65,10 +61,9 @@ def compute_avg_func_evals(lambda_max_list, n_list, m, no_vars,
             func_evals_dir_MP = (np.genfromtxt(
                                 'func_evals_dir_MP_n=%s_m=%s_'
                                 'lambda_max=%s_%s_%s'
-                                '_%s_%s_%s.csv' %
+                                '_%s_%s.csv' %
                                 (n, m, lambda_max,
                                  no_vars,
-                                 type_inverse,
                                  region,
                                  function_type,
                                  save_outputs),
@@ -142,8 +137,7 @@ if __name__ == "__main__":
     m = int(sys.argv[1])
     region = float(sys.argv[2])
     function_type = str(sys.argv[3])
-    type_inverse = str(sys.argv[4])
-    func_evals = int(sys.argv[5])
+    func_evals = int(sys.argv[4])
     lambda_max_list = [1, 4, 8]
     n_list = [16, 32, 50, 100, 200]
     no_vars = m
@@ -155,6 +149,6 @@ if __name__ == "__main__":
         save_outputs = func_evals
 
     arr = compute_avg_func_evals(lambda_max_list, n_list, m, no_vars,
-                                 type_inverse, save_outputs)
+                                 save_outputs)
     write_to_latex(arr, 'func_evals_diff_n', m, function_type,
                    region, save_outputs)

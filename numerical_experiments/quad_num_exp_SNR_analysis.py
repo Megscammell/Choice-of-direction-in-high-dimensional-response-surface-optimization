@@ -216,8 +216,7 @@ if __name__ == "__main__":
     m = int(sys.argv[2])
     region = float(sys.argv[3])
     function_type = str(sys.argv[4])
-    type_inverse = str(sys.argv[5])
-    func_evals = int(sys.argv[6])
+    func_evals = int(sys.argv[5])
 
     if func_evals == 0:
         save_outputs = None
@@ -354,10 +353,9 @@ if __name__ == "__main__":
 
         fp_norms_MP[lambda_max_index] = (np.genfromtxt(
                                          'fp_norms_MP_n=%s_m=%s_lambda_max'
-                                         '=%s_%s_%s_%s_%s_%s.csv' %
+                                         '=%s_%s_%s_%s_%s.csv' %
                                          (n, m, lambda_max,
                                           no_vars,
-                                          type_inverse,
                                           region,
                                           function_type,
                                           save_outputs),
@@ -365,10 +363,9 @@ if __name__ == "__main__":
 
         fp_func_vals_MP[lambda_max_index] = (np.genfromtxt(
                                              'fp_func_vals_MP_n=%s_m=%s_lambda'
-                                             '_max=%s_%s_%s_%s_%s_%s.csv' %
+                                             '_max=%s_%s_%s_%s_%s.csv' %
                                              (n, m, lambda_max,
                                               no_vars,
-                                              type_inverse,
                                               region,
                                               function_type,
                                               save_outputs),
@@ -377,10 +374,9 @@ if __name__ == "__main__":
         func_evals_step_MP[lambda_max_index] = (np.genfromtxt(
                                                 'func_evals_step_MP_n=%s_m=%s'
                                                 '_lambda_max=%s_%s_%s'
-                                                '_%s_%s_%s.csv' %
+                                                '_%s_%s.csv' %
                                                 (n, m, lambda_max,
                                                  no_vars,
-                                                 type_inverse,
                                                  region,
                                                  function_type,
                                                  save_outputs),
@@ -389,10 +385,9 @@ if __name__ == "__main__":
         func_evals_dir_MP[lambda_max_index] = (np.genfromtxt(
                                                'func_evals_dir_MP_n=%s_m=%s_'
                                                'lambda_max=%s_%s_%s'
-                                               '_%s_%s_%s.csv' %
+                                               '_%s_%s.csv' %
                                                (n, m, lambda_max,
                                                 no_vars,
-                                                type_inverse,
                                                 region,
                                                 function_type,
                                                 save_outputs),
@@ -400,10 +395,9 @@ if __name__ == "__main__":
 
         good_dir_norm_MP[lambda_max_index] = (np.genfromtxt(
                                               'good_dir_norm_MP_n=%s_m=%s_lamb'
-                                              'da_max=%s_%s_%s_%s_%s_%s.csv' %
+                                              'da_max=%s_%s_%s_%s_%s.csv' %
                                               (n, m, lambda_max,
                                                no_vars,
-                                               type_inverse,
                                                region,
                                                function_type,
                                                save_outputs),
@@ -411,10 +405,9 @@ if __name__ == "__main__":
 
         good_dir_prop_MP[lambda_max_index] = (np.genfromtxt(
                                               'good_dir_prop_MP_n=%s_m=%s_lamb'
-                                              'da_max=%s_%s_%s_%s_%s_%s.csv' %
+                                              'da_max=%s_%s_%s_%s_%s.csv' %
                                               (n, m, lambda_max,
                                                no_vars,
-                                               type_inverse,
                                                region,
                                                function_type,
                                                save_outputs),
@@ -422,10 +415,9 @@ if __name__ == "__main__":
 
         no_its_MP[lambda_max_index] = (np.genfromtxt(
                                        'no_its_MP_n=%s_m=%s_lambda_max=%s_%s'
-                                       '_%s_%s_%s_%s.csv' %
+                                       '_%s_%s_%s.csv' %
                                        (n, m, lambda_max,
                                         no_vars,
-                                        type_inverse,
                                         region,
                                         function_type,
                                         save_outputs),

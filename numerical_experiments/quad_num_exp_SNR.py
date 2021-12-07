@@ -10,23 +10,21 @@ if __name__ == "__main__":
     to the following:
 
     n : set to either 16, 32, 50, 100 or 200.
-    m : 100.
+    m : 10 or 100.
     lambda_max : set lambda_max to be either 1, 4 or 8.
     region : 0.1.
     function_type : set function_type to be either 'quad' or 'sqr_quad'.
-    type_inverse : set either as 'right' or 'left'. Will obtain same results.
     func_evals : can either set to 0 which will mean PI_LS will be run first to
                  determine the total number of function evaluations to use
                  for PI_MPI and PI_XY.
-                 Can also set to 500 and 2000 for PI_MPI and PI_XY.
+                 Otherwise, can set to 500 and 2000 for PI_MPI and PI_XY.
     """
     n = int(sys.argv[1])
     m = int(sys.argv[2])
     lambda_max = int(sys.argv[3])
     region = float(sys.argv[4])
     function_type = str(sys.argv[5])
-    type_inverse = str(sys.argv[6])
-    func_evals = int(sys.argv[7])
+    func_evals = int(sys.argv[6])
 
     if function_type == 'quad':
         f = est_dir.quad_f_noise
@@ -61,4 +59,4 @@ if __name__ == "__main__":
 
     est_dir.quad_LS_XY_MP(f, f_no_noise, n, m, num_funcs, lambda_max, cov,
                           noise_list, no_vars, region, function_type,
-                          type_inverse, store_max_func_evals)
+                          store_max_func_evals)
