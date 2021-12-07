@@ -320,111 +320,7 @@ def test_12():
 
 def test_13():
     """
-    Test outputs of compute_direction_MP() - type_inverse = 'left'.
-    """
-    np.random.seed(91)
-    n = 16
-    m = 100
-    no_vars = m
-    f = est_dir.quad_f_noise
-    minimizer = np.ones((m,))
-    centre_point = np.random.uniform(-2, 2, (m,))
-    matrix = est_dir.quad_func_params(1, 1, m)
-    func_args = (minimizer, matrix, 0, 1)
-    region = 0.1
-    type_inverse = 'left'
-    direction, func_evals = (est_dir.compute_direction_MP
-                             (n, m, centre_point, f, func_args,
-                              no_vars, region, type_inverse))
-    assert(func_evals == 16)
-    assert(direction.shape == (m,))
-    assert(np.where(direction == 0)[0].shape[0] == 0)
-    assert(np.max(abs(direction)) == 1)
-    pos_max = np.argmax(direction)
-    for j in range(no_vars):
-        if j != pos_max:
-            assert(abs(direction[j]) <= 1)
-
-    np.random.seed(91)
-    n = 16
-    m = 100
-    no_vars = m
-    f = est_dir.quad_f_noise
-    minimizer = np.ones((m,))
-    centre_point = np.random.uniform(-2, 2, (m,))
-    matrix = est_dir.quad_func_params(1, 1, m)
-    func_args = (minimizer, matrix, 0, 1)
-    region = 0.1
-    act_design, y, positions, func_evals = (est_dir.compute_random_design
-                                            (n, m, centre_point, no_vars,
-                                             f, func_args, region))
-    full_act_design = np.ones((act_design.shape[0], act_design.shape[1] + 1))
-    full_act_design[:, 1:] = act_design
-    direction2 = np.zeros((m,))
-    est = (np.linalg.pinv(full_act_design.T @ full_act_design) @
-           full_act_design.T @ y)
-    direction2[positions] = est_dir.divide_abs_max_value(est[1:])
-    assert(full_act_design.shape == (n, m + 1))
-    assert(np.all(full_act_design != 0))
-    assert(np.all(full_act_design[:, 0] == np.ones(n)))
-    assert(np.all(direction2 == direction))
-
-
-def test_14():
-    """
-    Test outputs of compute_direction_MP() - type_inverse = 'right'.
-    """
-    np.random.seed(91)
-    n = 16
-    m = 100
-    no_vars = m
-    f = est_dir.quad_f_noise
-    minimizer = np.ones((m,))
-    centre_point = np.random.uniform(-2, 2, (m,))
-    matrix = est_dir.quad_func_params(1, 1, m)
-    func_args = (minimizer, matrix, 0, 1)
-    region = 0.1
-    type_inverse = 'right'
-    direction, func_evals = (est_dir.compute_direction_MP
-                             (n, m, centre_point, f, func_args,
-                              no_vars, region, type_inverse))
-    assert(func_evals == 16)
-    assert(direction.shape == (m,))
-    assert(np.where(direction == 0)[0].shape[0] == 0)
-    assert(np.max(abs(direction)) == 1)
-    pos_max = np.argmax(direction)
-    for j in range(no_vars):
-        if j != pos_max:
-            assert(abs(direction[j]) <= 1)
-
-    np.random.seed(91)
-    n = 16
-    m = 100
-    no_vars = m
-    f = est_dir.quad_f_noise
-    minimizer = np.ones((m,))
-    centre_point = np.random.uniform(-2, 2, (m,))
-    matrix = est_dir.quad_func_params(1, 1, m)
-    func_args = (minimizer, matrix, 0, 1)
-    region = 0.1
-    act_design, y, positions, func_evals = (est_dir.compute_random_design
-                                            (n, m, centre_point, no_vars,
-                                             f, func_args, region))
-    full_act_design = np.ones((act_design.shape[0], act_design.shape[1] + 1))
-    full_act_design[:, 1:] = act_design
-    direction2 = np.zeros((m,))
-    est = (full_act_design.T @
-           np.linalg.pinv(full_act_design @ full_act_design.T) @ y)
-    direction2[positions] = est_dir.divide_abs_max_value(est[1:])
-    assert(full_act_design.shape == (n, m + 1))
-    assert(np.all(full_act_design != 0))
-    assert(np.all(full_act_design[:, 0] == np.ones(n)))
-    assert(np.all(direction2 == direction))
-
-
-def test_15():
-    """
-    Test outputs of compute_direction_MP() - type_inverse = 'left'.
+    Test outputs of compute_direction_MP().
     """
     np.random.seed(91)
     n = 16
@@ -436,10 +332,9 @@ def test_15():
     matrix = est_dir.quad_func_params(1, 1, m)
     func_args = (minimizer, matrix, 0, 1)
     region = 0.1
-    type_inverse = 'left'
     direction, func_evals = (est_dir.compute_direction_MP
                              (n, m, centre_point, f, func_args,
-                              no_vars, region, type_inverse))
+                              no_vars, region))
     assert(func_evals == 16)
     assert(direction.shape == (m,))
     assert(np.where(direction == 0)[0].shape[0] == m - no_vars)
@@ -465,8 +360,7 @@ def test_15():
     full_act_design = np.ones((act_design.shape[0], act_design.shape[1] + 1))
     full_act_design[:, 1:] = act_design
     direction2 = np.zeros((m,))
-    est = (np.linalg.pinv(full_act_design.T @ full_act_design) @
-           full_act_design.T @ y)
+    est = (np.linalg.pinv(full_act_design) @ y)
     direction2[positions] = est_dir.divide_abs_max_value(est[1:])
     assert(full_act_design.shape == (n, no_vars+1))
     assert(np.all(full_act_design != 0))
@@ -474,9 +368,54 @@ def test_15():
     assert(np.all(direction2 == direction))
 
 
-def test_16():
+
+def test_14():
     """
-    Test outputs of calc_first_phase_RSM_MP() - type_inverse = 'left'.
+    Test outputs of compute_direction_MP() - n = m.
+    """
+    np.random.seed(91)
+    n = 100
+    m = 100
+    no_vars = m
+    f = est_dir.quad_f_noise
+    minimizer = np.ones((m,))
+    centre_point = np.random.uniform(-2, 2, (m,))
+    matrix = est_dir.quad_func_params(1, 1, m)
+    func_args = (minimizer, matrix, 0, 1)
+    region = 0.1
+    direction, func_evals = (est_dir.compute_direction_MP
+                             (n, m, centre_point, f, func_args,
+                              no_vars, region))
+    assert(func_evals == n)
+    assert(direction.shape == (m,))
+    assert(np.where(direction == 0)[0].shape[0] == 0)
+    assert(np.max(abs(direction)) == 1)
+    pos_max = np.argmax(direction)
+    for j in range(no_vars):
+        if j != pos_max:
+            assert(abs(direction[j]) <= 1)
+
+    np.random.seed(91)
+    centre_point = np.random.uniform(-2, 2, (m,))
+    matrix = est_dir.quad_func_params(1, 1, m)
+    func_args = (minimizer, matrix, 0, 1)
+    act_design, y, positions, func_evals = (est_dir.compute_random_design
+                                            (n, m, centre_point, no_vars,
+                                             f, func_args, region))
+    full_act_design = np.ones((act_design.shape[0], act_design.shape[1] + 1))
+    full_act_design[:, 1:] = act_design
+    direction2 = np.zeros((m,))
+    est = (np.linalg.pinv(full_act_design, 0.15) @ y)
+    direction2[positions] = est_dir.divide_abs_max_value(est[1:])
+    assert(full_act_design.shape == (n, no_vars+1))
+    assert(np.all(full_act_design != 0))
+    assert(np.all(full_act_design[:, 0] == np.ones(n)))
+    assert(np.all(np.round(direction2, 5) == np.round(direction, 5)))
+
+
+def test_15():
+    """
+    Test outputs of calc_first_phase_RSM_MP().
     """
     np.random.seed(91)
     n = 16
@@ -488,7 +427,6 @@ def test_16():
     matrix = est_dir.quad_func_params(1, 1, m)
     func_args = (minimizer, matrix, 0, 1)
     region = 0.1
-    type_inverse = 'left'
     init_func_val = f(centre_point, *func_args)
     const_back = 0.5
     forward_tol = 1000000
@@ -501,67 +439,8 @@ def test_16():
      total_func_evals_dir) = (est_dir.calc_first_phase_RSM_MP
                               (centre_point, init_func_val, f, func_args,
                                n, m, const_back, back_tol, const_forward,
-                               forward_tol, step, no_vars, region,
-                               type_inverse))
+                               forward_tol, step, no_vars, region))
     assert(upd_point.shape == (m, ))
     assert(f_new < init_func_val)
     assert(total_func_evals_step > 0)
     assert(total_func_evals_dir == n)
-
-
-def test_17():
-    """
-    Test outputs of compute_direction_MP() - type_inverse = 'left'
-    and n = m.
-    """
-    np.random.seed(91)
-    n = 100
-    m = 100
-    no_vars = m
-    f = est_dir.quad_f_noise
-    minimizer = np.ones((m,))
-    centre_point = np.random.uniform(-2, 2, (m,))
-    matrix = est_dir.quad_func_params(1, 1, m)
-    func_args = (minimizer, matrix, 0, 1)
-    region = 0.1
-    type_inverse = 'left'
-    direction, func_evals = (est_dir.compute_direction_MP
-                             (n, m, centre_point, f, func_args,
-                              no_vars, region, type_inverse))
-    assert(func_evals == n)
-    assert(direction.shape == (m,))
-    assert(np.where(direction != 0)[0].shape[0] == no_vars)
-    assert(np.max(abs(direction)) == 1)
-    pos_max = np.argmax(direction)
-    for j in range(no_vars):
-        if j != pos_max:
-            assert(abs(direction[j]) <= 1)
-
-
-def test_18():
-    """
-    Test outputs of compute_direction_MP() - type_inverse = 'right'
-    and n = m.
-    """
-    np.random.seed(91)
-    n = 100
-    m = 100
-    no_vars = m
-    f = est_dir.quad_f_noise
-    minimizer = np.ones((m,))
-    centre_point = np.random.uniform(-2, 2, (m,))
-    matrix = est_dir.quad_func_params(1, 1, m)
-    func_args = (minimizer, matrix, 0, 1)
-    region = 0.1
-    type_inverse = 'right'
-    direction, func_evals = (est_dir.compute_direction_MP
-                             (n, m, centre_point, f, func_args,
-                              no_vars, region, type_inverse))
-    assert(func_evals == n)
-    assert(direction.shape == (m,))
-    assert(np.where(direction != 0)[0].shape[0] == no_vars)
-    assert(np.max(abs(direction)) == 1)
-    pos_max = np.argmax(direction)
-    for j in range(no_vars):
-        if j != pos_max:
-            assert(abs(direction[j]) <= 1)

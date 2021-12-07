@@ -584,7 +584,7 @@ def num_exp_SNR_XY(f, f_no_noise, n, m, num_funcs, lambda_max, cov, noise_list,
 
 def num_exp_SNR_MP(f, f_no_noise, n, m, num_funcs, lambda_max, cov,
                    noise_list, no_vars, region, max_func_evals_list,
-                   type_inverse, function_type, store_max_func_evals):
+                   function_type, store_max_func_evals):
     """
     Numerical experiments for MP - with various SNR.
 
@@ -633,8 +633,6 @@ def num_exp_SNR_MP(f, f_no_noise, n, m, num_funcs, lambda_max, cov,
     max_func_evals_list : list
                           Number of function evaluations permitted for each
                           SNR.
-    type_inverse : string
-                   Determine whether to perform a left or right inverse.
     function_type : string
                     Either function_type = 'quad', 'sqr_quad' or
                     'squ_quad'.
@@ -730,7 +728,7 @@ def num_exp_SNR_MP(f, f_no_noise, n, m, num_funcs, lambda_max, cov,
              store_good_dir_func) = (est_dir.calc_its_until_sc_MP(
                                      centre_point, f, func_args, n, m,
                                      f_no_noise, func_args_no_noise, no_vars,
-                                     region, max_func_evals, type_inverse))
+                                     region, max_func_evals))
             fp_norms_MP[index_noise, j] = np.linalg.norm(minimizer - upd_point)
             fp_func_vals_MP[index_noise, j] = f_no_noise(upd_point, minimizer,
                                                          matrix)
@@ -750,65 +748,65 @@ def num_exp_SNR_MP(f, f_no_noise, n, m, num_funcs, lambda_max, cov,
                 store_max_func_evals),
                sp_func_vals_MP, delimiter=',')
 
-    np.savetxt('fp_norms_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s_%s_%s.csv' %
+    np.savetxt('fp_norms_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s_%s.csv' %
                (option_t, n, m, lambda_max, no_vars,
-                type_inverse, region, function_type, store_max_func_evals),
+                region, function_type, store_max_func_evals),
                fp_norms_MP,
                delimiter=',')
 
-    np.savetxt('fp_func_vals_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s_%s_%s.csv' %
+    np.savetxt('fp_func_vals_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s_%s.csv' %
                (option_t, n, m, lambda_max, no_vars,
-                type_inverse, region, function_type, store_max_func_evals),
+                region, function_type, store_max_func_evals),
                fp_func_vals_MP,
                delimiter=',')
 
-    np.savetxt('func_evals_step_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s'
+    np.savetxt('func_evals_step_%s_n=%s_m=%s_lambda_max=%s_%s_%s'
                '_%s_%s.csv' %
                (option_t, n, m, lambda_max, no_vars,
-                type_inverse, region, function_type, store_max_func_evals),
+                region, function_type, store_max_func_evals),
                func_evals_step_MP,
                delimiter=',')
 
-    np.savetxt('func_evals_dir_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s_%s_%s.csv' %
+    np.savetxt('func_evals_dir_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s_%s.csv' %
                (option_t, n, m, lambda_max, no_vars,
-                type_inverse, region, function_type, store_max_func_evals),
+                region, function_type, store_max_func_evals),
                func_evals_dir_MP,
                delimiter=',')
 
-    np.savetxt('time_taken_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s_%s_%s.csv' %
+    np.savetxt('time_taken_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s_%s.csv' %
                (option_t, n, m, lambda_max, no_vars,
-                type_inverse, region, function_type, store_max_func_evals),
+                region, function_type, store_max_func_evals),
                time_taken_MP,
                delimiter=',')
 
-    np.savetxt('fp_func_vals_noise_%s_n=%s_m=%s_lambda_max=%s_%s_%s'
+    np.savetxt('fp_func_vals_noise_%s_n=%s_m=%s_lambda_max=%s_%s'
                '_%s_%s_%s.csv' %
                (option_t, n, m, lambda_max, no_vars,
-                type_inverse, region, function_type, store_max_func_evals),
+                region, function_type, store_max_func_evals),
                fp_func_vals_noise_MP,
                delimiter=',')
 
-    np.savetxt('good_dir_prop_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s_%s_%s.csv' %
+    np.savetxt('good_dir_prop_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s_%s.csv' %
                (option_t, n, m, lambda_max, no_vars,
-                type_inverse, region, function_type, store_max_func_evals),
+                region, function_type, store_max_func_evals),
                good_dir_no_its_prop_MP,
                delimiter=',')
 
-    np.savetxt('no_its_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s_%s_%s.csv' %
+    np.savetxt('no_its_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s_%s.csv' %
                (option_t, n, m, lambda_max, no_vars,
-                type_inverse, region, function_type, store_max_func_evals),
+                region, function_type, store_max_func_evals),
                no_its_MP,
                delimiter=',')
 
-    np.savetxt('good_dir_norm_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s_%s_%s.csv' %
+    np.savetxt('good_dir_norm_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s_%s.csv' %
                (option_t, n, m, lambda_max, no_vars,
-                type_inverse, region, function_type, store_max_func_evals),
+                region, function_type, store_max_func_evals),
                good_dir_norm_MP,
                delimiter=',')
 
-    np.savetxt('good_dir_func_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s_%s_%s.csv' %
+    np.savetxt('good_dir_func_%s_n=%s_m=%s_lambda_max=%s_%s_%s_%s_%s.csv' %
                (option_t, n, m, lambda_max, no_vars,
-                type_inverse, region, function_type, store_max_func_evals),
+                region, function_type, store_max_func_evals),
                good_dir_func_MP,
                delimiter=',')
 
@@ -823,8 +821,7 @@ def num_exp_SNR_MP(f, f_no_noise, n, m, num_funcs, lambda_max, cov,
 
 
 def quad_LS_XY_MP(f, f_no_noise, n, m, num_funcs, lambda_max, cov, noise_list,
-                  no_vars, region, function_type, type_inverse,
-                  store_max_func_evals):
+                  no_vars, region, function_type, store_max_func_evals):
     """
     Runs all numerical experiments.
 
@@ -873,9 +870,6 @@ def quad_LS_XY_MP(f, f_no_noise, n, m, num_funcs, lambda_max, cov, noise_list,
     function_type : string
                     Either function_type = 'quad', 'sqr_quad' or
                     'squ_quad'.
-    type_inverse : string
-                   Determine whether to perform a left or right inverse for
-                   PI-MP.
     store_max_func_evals : either a list or None
                            If a list is provided then, PI-MP and PI-XY will use
                            a predefined number of function evaluations to
@@ -897,8 +891,6 @@ def quad_LS_XY_MP(f, f_no_noise, n, m, num_funcs, lambda_max, cov, noise_list,
         raise ValueError('no_vars must be less than m.')
     if (type(region) is not int) and (type(region) is not float):
         raise ValueError('region must be an integer or float.')
-    if type_inverse != 'right' and type_inverse != 'left':
-        raise ValueError('type_inverse must either be right or left.')
     if type(function_type) is not str:
         raise ValueError('function_type must be a string.')
 
@@ -914,7 +906,7 @@ def quad_LS_XY_MP(f, f_no_noise, n, m, num_funcs, lambda_max, cov, noise_list,
         results_MP = num_exp_SNR_MP(f, f_no_noise, n, m, num_funcs,
                                     lambda_max, cov, noise_list,
                                     no_vars, region,
-                                    max_func_evals_list, type_inverse,
+                                    max_func_evals_list,
                                     function_type, store_max_func_evals)
 
         results_XY = num_exp_SNR_XY(f, f_no_noise, n, m, num_funcs, lambda_max,
@@ -935,7 +927,7 @@ def quad_LS_XY_MP(f, f_no_noise, n, m, num_funcs, lambda_max, cov, noise_list,
         max_func_evals_list = np.array(store_max_func_evals)
         results_MP = num_exp_SNR_MP(f, f_no_noise, n, m, num_funcs, lambda_max,
                                     cov, noise_list, no_vars, region,
-                                    max_func_evals_list, type_inverse,
+                                    max_func_evals_list,
                                     function_type, store_max_func_evals[0])
 
         results_XY = num_exp_SNR_XY(f, f_no_noise, n, m, num_funcs, lambda_max,
