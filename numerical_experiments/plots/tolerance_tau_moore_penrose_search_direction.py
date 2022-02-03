@@ -70,7 +70,6 @@ def compute_MP_diff_search_direction(noise_list, tol_list, cov, n, m,
         index_tol = 0
         for tol in tol_list:
             for j in range(100):
-                np.random.seed((j + 1) * 100)
                 (centre_point,
                  minimizer,
                  matrix) = est_dir.generate_func_params(j, cov, m, lambda_max)
@@ -143,6 +142,7 @@ def create_boxplots_ratio_3(arr1, arr2, arr3, labels,  ticks, title, m, n,
                (title, m, n, lambda_max,
                 no_vars, region, function_type))
 
+
 if __name__ == "__main__":
     n = int(sys.argv[1])
     m = int(sys.argv[2])
@@ -172,7 +172,7 @@ if __name__ == "__main__":
                         m, num_funcs, lambda_max, cov, f_no_noise))
 
     noise_list = est_dir.compute_var_quad_form(snr_list, sp_func_vals_init,
-                                            region)
+                                               region)
 
     (var_dir_elements_MP,
     range_dir_elements_MP) = (compute_MP_diff_search_direction(

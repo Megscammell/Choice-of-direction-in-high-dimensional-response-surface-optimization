@@ -161,20 +161,19 @@ def compute_var_diff_search_direction(noise_list, cov, n, m, lambda_max,
     index_noise = 0
     for noise_sd in noise_list:
         for j in range(100):
-            np.random.seed((j + 1) * 100)
             (centre_point,
-            minimizer,
-            matrix) = est_dir.generate_func_params(j, cov, m, lambda_max)
+             minimizer,
+             matrix) = est_dir.generate_func_params(j, cov, m, lambda_max)
             func_args = (minimizer, matrix, 0, noise_sd)
 
             np.random.seed(j)
             (design_temp,
-            y_temp,
-            positions_temp,
-            func_evals_temp) = (compute_random_design_old(
-                                n, m, centre_point,
-                                no_vars, f, func_args,
-                                region))
+             y_temp,
+             positions_temp,
+             func_evals_temp) = (compute_random_design_old(
+                                 n, m, centre_point,
+                                 no_vars, f, func_args,
+                                 region))
             direction_MY_rand = design_temp.T @ y_temp
             var_dir_elements[0, index_noise, j] = np.var(direction_MY_rand)
             range_dir_elements[0, 
@@ -196,10 +195,10 @@ def compute_var_diff_search_direction(noise_list, cov, n, m, lambda_max,
                                        np.min(abs(direction_MP_rand[1:])))
             np.random.seed(j)
             (act_design,
-            y, positions,
-            func_evals) = (est_dir.compute_random_design
+             y, positions,
+             func_evals) = (est_dir.compute_random_design
                             (n, m, centre_point, no_vars,
-                            f, func_args, region))
+                             f, func_args, region))
             direction_MY = act_design.T @ y
             var_dir_elements[1, index_noise, j] = np.var(direction_MY)
             range_dir_elements[1, index_noise, j] = (np.max(abs(direction_MY)) -
