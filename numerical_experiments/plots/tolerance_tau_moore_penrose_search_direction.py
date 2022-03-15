@@ -108,7 +108,7 @@ def set_box_color(bp, color):
 def create_boxplots_ratio_3(arr1, arr2, arr3, labels,  ticks, title, m, n,
                             lambda_max, no_vars, region, function_type):
     """Create boxplots."""
-    plt.figure(figsize=(6, 5))
+    plt.figure(figsize=(5, 6))
     plt.yscale("log")
     bpl = plt.boxplot(arr1.T,
                       positions=np.array(range(len(arr1)))*3.0-0.6)
@@ -131,10 +131,10 @@ def create_boxplots_ratio_3(arr1, arr2, arr3, labels,  ticks, title, m, n,
                                 label='SNR=5')
    
     plt.legend(handles=[green_patch, red_patch, blue_patch],
-               bbox_to_anchor=[1.02, 1.03], loc='upper right',
+               bbox_to_anchor=[1.02, 1.02], loc='upper right',
                prop={'size': 15})    
 
-    plt.xlabel(r'$\tau$', size=14)
+    plt.xlabel(r'$\tau$', size=18)
     plt.xticks(np.arange(0, len(ticks) * 3, 3), ticks, size=15)
     plt.yticks(fontsize=14)
     plt.tight_layout()

@@ -234,7 +234,7 @@ def create_boxplots_ratio_2(arr1, arr2, labels,  ticks, title, m, n,
                             lambda_max, no_vars, region, function_type,
                             type_dir):
     """Create boxplots."""
-    plt.figure(figsize=(5, 5))
+    plt.figure(figsize=(5, 6))
     plt.yscale("log")
     bpl = plt.boxplot(arr1.T,
                       positions=np.array(range(len(arr1)))*2.0-0.4)
@@ -244,7 +244,7 @@ def create_boxplots_ratio_2(arr1, arr2, labels,  ticks, title, m, n,
     set_box_color(bpr, 'red')
     plt.plot([], c='green', label=labels[0])
     plt.plot([], c='red', label=labels[1])
-    plt.xlabel(r'SNR', size=14)
+    plt.xlabel(r'SNR', size=16)
     plt.xticks(np.arange(0, len(ticks) * 2, 2), ticks, size=15)
     plt.yticks(fontsize=14)
     plt.tight_layout()

@@ -35,12 +35,13 @@ def compute_trajectory(f, func_args, points, title):
             x1_var = X[i, j]
             x2_var = Y[i, j]
             Z[i, j] = f(np.array([x1_var, x2_var]).reshape(2, ), *func_args)
-
+    plt.figure(figsize=(5, 5))
     plt.scatter(points[:, 0], points[:, 1], color='black')
     plt.plot(points[:, 0], points[:, 1], color='black')
     plt.scatter(points[0,0], points[0,1], color='red', s=100, marker='o')
     plt.scatter(points[1,0], points[1,1], color='blue', s=100, marker='o')
     plt.contour(X, Y, Z, 50, cmap='RdGy', alpha=0.25)
+    plt.colorbar()
     plt.savefig('illustration_variance_of_coeffs_search_%s.png' % (title))
 
 

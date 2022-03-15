@@ -18,7 +18,7 @@ def create_boxplots_ratio_2(arr1, arr2, labels, m, n, lambda_max, title, ticks,
                             no_vars, range_1, range_2, region, function_type,
                             func_evals):
     """Create boxplots."""
-    plt.figure(figsize=(5, 5))
+    plt.figure(figsize=(5, 6))
     plt.ylim(range_1, range_2)
     bpl = plt.boxplot(arr1.T,
                       positions=np.array(range(len(arr1)))*2.0-0.4)
@@ -28,7 +28,7 @@ def create_boxplots_ratio_2(arr1, arr2, labels, m, n, lambda_max, title, ticks,
     set_box_color(bpr, 'purple')
     plt.plot([], c='navy', label=labels[0])
     plt.plot([], c='purple', label=labels[1])
-    plt.xlabel(r'SNR', size=14)
+    plt.xlabel(r'SNR', size=16)
     plt.xticks(np.arange(0, len(ticks) * 2, 2), ticks, size=15)
     plt.yticks(fontsize=14)
     plt.tight_layout()
@@ -42,7 +42,7 @@ def create_boxplots_ratio_3(arr1, arr2, arr3, labels, m, n, lambda_max, title,
                             ticks, no_vars, range_1, range_2, region,
                             function_type, func_evals):
     """Create boxplots."""
-    plt.figure(figsize=(5, 5))
+    plt.figure(figsize=(5, 6))
     plt.ylim(range_1, range_2)
     bpl = plt.boxplot(arr1.T,
                       positions=np.array(range(len(arr1)))*3.0-0.6)
@@ -56,7 +56,7 @@ def create_boxplots_ratio_3(arr1, arr2, arr3, labels, m, n, lambda_max, title,
     plt.plot([], c='green', label=labels[0])
     plt.plot([], c='navy', label=labels[1])
     plt.plot([], c='purple', label=labels[2])
-    plt.xlabel(r'SNR', size=14)
+    plt.xlabel(r'SNR', size=16)
     plt.xticks(np.arange(0, len(ticks) * 3, 3), ticks, size=15)
     plt.yticks(fontsize=14)
     plt.tight_layout()

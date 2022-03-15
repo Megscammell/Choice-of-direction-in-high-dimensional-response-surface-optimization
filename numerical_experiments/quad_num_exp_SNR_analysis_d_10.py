@@ -37,9 +37,9 @@ def bar_charts(arr1, arr2, arr3, arr4, arr5, arr6, title_pdf, n, m,
     region : float
              Region of exploration around the centre point.
     """
-    plt.figure(figsize=(7, 5))
+    plt.figure(figsize=(5, 5))
     ticks = ['1', '4', '8']
-    plt.xlabel(r'$\lambda_{max}$', fontsize=15)
+    plt.xlabel(r'$\lambda_{max}$', fontsize=16)
     X_num = np.arange(len(ticks)) * 2
     plt.bar(X_num - 0.8, arr1, 0.3, color=sns.xkcd_rgb["pale red"])
     plt.bar(X_num - 0.48, arr2, 0.3, color=sns.xkcd_rgb["medium blue"])
@@ -63,7 +63,7 @@ def bar_charts(arr1, arr2, arr3, arr4, arr5, arr6, title_pdf, n, m,
                                 label='SNR=10')
     plt.legend(handles=[red_patch, blue_patch, purple_patch, green_patch,
                         orange_patch, pink_patch],
-               bbox_to_anchor=[1.34, 1.03], loc='upper right',
+               bbox_to_anchor=[1.46, 1.03], loc='upper right',
                prop={'size': 15})
     plt.ylim(0, 1)
     plt.savefig('%s_n_%s_m_%s_%s_%s.png' %

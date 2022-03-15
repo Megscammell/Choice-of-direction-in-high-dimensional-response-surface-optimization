@@ -137,6 +137,7 @@ def compute_trajectory(f, func_args, points, upd_point):
                 Resulting point from finding suitable step size.
     """
     plt.clf()
+    plt.figure(figsize=(5, 5))
     test_num = 100
     bounds = (-3, 3)
     test_num = 100
@@ -159,6 +160,7 @@ def compute_trajectory(f, func_args, points, upd_point):
     plt.plot(points[:, 0], points[:, 1], color='black')
     plt.scatter(upd_point[0], upd_point[1], color='blue', s=100, marker='o')
     plt.contour(X, Y, Z, 50, cmap='RdGy', alpha=0.25)
+    plt.colorbar()
     plt.savefig('step_length_ex_contour.png')
 
 
@@ -212,6 +214,7 @@ def plot_parabolic_interpolation(track):
             corresponding response function value.
     """
     plt.clf()
+    plt.figure(figsize=(5, 5))
     temp_track = np.array([[track[0, 0], track[0, 1]],
                            [track[2, 0], track[2, 1]],
                            [track[3, 0], track[3, 1]]])
