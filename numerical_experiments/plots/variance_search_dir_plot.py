@@ -3,6 +3,7 @@ import numpy as np
 
 import est_dir
 
+
 def compute_trajectory(f, func_args, points, title):
     """
     Plot step lengths along the search direction.
@@ -38,8 +39,8 @@ def compute_trajectory(f, func_args, points, title):
     plt.figure(figsize=(5, 5))
     plt.scatter(points[:, 0], points[:, 1], color='black')
     plt.plot(points[:, 0], points[:, 1], color='black')
-    plt.scatter(points[0,0], points[0,1], color='red', s=100, marker='o')
-    plt.scatter(points[1,0], points[1,1], color='blue', s=100, marker='o')
+    plt.scatter(points[0, 0], points[0, 1], color='red', s=100, marker='o')
+    plt.scatter(points[1, 0], points[1, 1], color='blue', s=100, marker='o')
     plt.contour(X, Y, Z, 50, cmap='RdGy', alpha=0.25)
     plt.colorbar()
     plt.savefig('illustration_variance_of_coeffs_search_%s.png' % (title))
@@ -50,7 +51,7 @@ if __name__ == "__main__":
     f = est_dir.quad_f_noise
     minimizer = np.zeros((m))
     matrix = np.array([[1, 0],
-                    [0, 1]])
+                       [0, 1]])
     mu = 0
     sd = 0.25
     func_args = (minimizer, matrix, mu, sd)
@@ -66,12 +67,12 @@ if __name__ == "__main__":
     direction = np.array([-0.8, -0.7])
     init_func_val = f(centre_point, *func_args)
     (upd_point,
-    func_val,
-    total_func_evals) = (est_dir.combine_tracking
-                        (centre_point, init_func_val,
-                        direction, step, const_back, 
-                        back_tol, const_forward, 
-                        forward_tol, f, func_args))
+     func_val,
+     total_func_evals) = (est_dir.combine_tracking
+                          (centre_point, init_func_val,
+                           direction, step, const_back,
+                           back_tol, const_forward,
+                           forward_tol, f, func_args))
 
     compute_trajectory(f, func_args, np.array([centre_point, upd_point]),
                        'same')
@@ -80,11 +81,11 @@ if __name__ == "__main__":
     direction = np.array([-80, -0.7])
     init_func_val = f(centre_point, *func_args)
     (upd_point,
-    func_val,
-    total_func_evals) = (est_dir.combine_tracking
-                        (centre_point, init_func_val,
-                        direction, step, const_back, 
-                        back_tol, const_forward, 
-                        forward_tol, f, func_args))
+     func_val,
+     total_func_evals) = (est_dir.combine_tracking
+                          (centre_point, init_func_val,
+                           direction, step, const_back,
+                           back_tol, const_forward,
+                           forward_tol, f, func_args))
     compute_trajectory(f, func_args, np.array([centre_point, upd_point]),
                        'large')

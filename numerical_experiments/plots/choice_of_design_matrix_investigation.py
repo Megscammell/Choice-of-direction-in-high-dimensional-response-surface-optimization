@@ -144,12 +144,12 @@ def compute_var_diff_search_direction(noise_list, cov, n, m, lambda_max,
                           no condition on the number of +1's or -1's in each
                           column.
     range_dir_elements: 3-D array
-                        For directions computed by MY, 
+                        For directions computed by MY,
                         returns the absolute maximum coefficient of the search
-                        direction subtracted by the absolute minimum coefficient
-                        of the search direction.
-    range_dir_elements_MP: 3-D array                 
-                           For directions computed by MP, 
+                        direction subtracted by the absolute minimum
+                        coefficient of the search direction.
+    range_dir_elements_MP: 3-D array
+                           For directions computed by MP,
                            returns the absolute maximum coefficient of the
                            search direction subtracted by the absolute minimum
                            coefficient of the search direction.
@@ -176,7 +176,7 @@ def compute_var_diff_search_direction(noise_list, cov, n, m, lambda_max,
                                  region))
             direction_MY_rand = design_temp.T @ y_temp
             var_dir_elements[0, index_noise, j] = np.var(direction_MY_rand)
-            range_dir_elements[0, 
+            range_dir_elements[0,
                                index_noise,
                                j] = (np.max(abs(direction_MY_rand)) -
                                      np.min(abs(direction_MY_rand)))
@@ -192,7 +192,7 @@ def compute_var_diff_search_direction(noise_list, cov, n, m, lambda_max,
             range_dir_elements_MP[0,
                                   index_noise,
                                   j] = (np.max(abs(direction_MP_rand[1:])) -
-                                       np.min(abs(direction_MP_rand[1:])))
+                                        np.min(abs(direction_MP_rand[1:])))
             np.random.seed(j)
             (act_design,
              y, positions,
@@ -205,7 +205,7 @@ def compute_var_diff_search_direction(noise_list, cov, n, m, lambda_max,
                                                      np.min(abs(direction_MY)))
 
             full_act_design = np.ones((act_design.shape[0],
-                                    act_design.shape[1] + 1))
+                                       act_design.shape[1] + 1))
             full_act_design[:, 1:] = act_design
             direction_MP = (np.linalg.pinv(full_act_design)
                             @ y)
@@ -219,7 +219,6 @@ def compute_var_diff_search_direction(noise_list, cov, n, m, lambda_max,
         index_noise += 1
     return (var_dir_elements, var_dir_elements_MP,
             range_dir_elements, range_dir_elements_MP)
-
 
 
 def set_box_color(bp, color):
@@ -297,9 +296,9 @@ if __name__ == "__main__":
                             labels, ticks, title, m, n, lambda_max, no_vars,
                             region, function_type, 'MPI')
     title = 'range'
-    create_boxplots_ratio_2(range_dir_elements[0], range_dir_elements[1], labels,
-                            ticks, title, m, n, lambda_max, no_vars, region,
-                            function_type, 'MY')
+    create_boxplots_ratio_2(range_dir_elements[0], range_dir_elements[1],
+                            labels, ticks, title, m, n, lambda_max, no_vars,
+                            region, function_type, 'MY')
     create_boxplots_ratio_2(range_dir_elements_MP[0], range_dir_elements_MP[1],
                             labels, ticks, title, m, n, lambda_max, no_vars,
                             region, function_type, 'MPI')

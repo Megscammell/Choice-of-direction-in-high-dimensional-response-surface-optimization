@@ -184,7 +184,8 @@ if __name__ == "__main__":
         create_boxplots_ratio_2(fp_norms_MP[i]/sp_norms[i],
                                 fp_norms_XY[i]/sp_norms[i], labels[2][1:],
                                 m, lambda_max, 'norms_MP_XY', n_list,
-                                region, function_type, snr_list, i, save_outputs)
+                                region, function_type, snr_list, i,
+                                save_outputs)
 
         create_boxplots_ratio_2(fp_func_vals_MP[i]/sp_func_vals[i],
                                 fp_func_vals_XY[i]/sp_func_vals[i],

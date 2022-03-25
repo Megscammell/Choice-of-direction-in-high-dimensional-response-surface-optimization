@@ -36,10 +36,10 @@ def sqrt_quad_example(n, d, no_vars, region, max_func_evals,
                     "Distance between fp and minimizer": [fp_dist],
                     "Function value at sp": [sp_func_val],
                     "Function value at fp": [fp_func_val],
-                    "Time taken" : [full_time],
+                    "Time taken": [full_time],
                     "Step function evals": [total_func_evals_step],
                     "Direction function evals": [total_func_evals_dir],
-                    "No iterations": [no_iterations],}))
+                    "No iterations": [no_iterations]}))
     summary_table.to_csv('first_phase_RSM_summary_table_d_%s'
                          '_n_%s_sqrt_quad.csv' % (d, n))
 

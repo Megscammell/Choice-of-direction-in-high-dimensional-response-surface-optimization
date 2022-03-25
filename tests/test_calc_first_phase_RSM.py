@@ -368,7 +368,6 @@ def test_13():
     assert(np.all(direction2 == direction))
 
 
-
 def test_14():
     """
     Test outputs of compute_direction_MP() - n = m.

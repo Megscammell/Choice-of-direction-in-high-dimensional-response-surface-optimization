@@ -60,7 +60,6 @@ def compute_direction_MP(n, m, centre_point, f, func_args, no_vars, region):
     return direction, func_evals
 
 
-
 def calc_first_phase_RSM_MP(centre_point, init_func_val, f, func_args,
                             n, m, const_back, back_tol, const_forward,
                             forward_tol, step, no_vars, region):

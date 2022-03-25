@@ -21,7 +21,7 @@ def compute_MP_diff_search_direction(noise_list, tol_list, cov, n, m,
                  function values.
     tol_list : 1-D array
                Store list of tolerances used for the inclusion of singular
-               values within the Moore-Penrose pseudoinverse.     
+               values within the Moore-Penrose pseudoinverse.
     cov : 2-D array
           Covariance matrix used to sample centre_point from normal
           distribution.
@@ -56,7 +56,7 @@ def compute_MP_diff_search_direction(noise_list, tol_list, cov, n, m,
                           Returns the variance of the search direction
                           for 100 functions with different standard
                           deviation of errors.
-    range_dir_elements_MP: 3-D array                 
+    range_dir_elements_MP: 3-D array
                            Returns the absolute maximum coefficient of the
                            search direction subtracted by the absolute minimum
                            coefficient of the search direction,
@@ -64,7 +64,7 @@ def compute_MP_diff_search_direction(noise_list, tol_list, cov, n, m,
                            deviation of errors.
     """
     var_dir_elements_MP = np.zeros((len(noise_list), len(tol_list), 100))
-    range_dir_elements_MP = np.zeros((len(noise_list),len(tol_list), 100))
+    range_dir_elements_MP = np.zeros((len(noise_list), len(tol_list), 100))
     index_noise = 0
     for noise_sd in noise_list:
         index_tol = 0
@@ -122,25 +122,25 @@ def create_boxplots_ratio_3(arr1, arr2, arr3, labels,  ticks, title, m, n,
     plt.plot([], c='green', label=labels[0])
     plt.plot([], c='red', label=labels[1])
     plt.plot([], c='blue', label=labels[2])
-    
+
     green_patch = mpatches.Patch(color=sns.xkcd_rgb["medium green"],
                                  label='SNR=0.5')
     red_patch = mpatches.Patch(color=sns.xkcd_rgb["pale red"],
                                label='SNR=2')
     blue_patch = mpatches.Patch(color=sns.xkcd_rgb["medium blue"],
                                 label='SNR=5')
-   
+
     plt.legend(handles=[green_patch, red_patch, blue_patch],
                bbox_to_anchor=[1.02, 1.02], loc='upper right',
-               prop={'size': 15})    
+               prop={'size': 15})
 
     plt.xlabel(r'$\tau$', size=18)
     plt.xticks(np.arange(0, len(ticks) * 3, 3), ticks, size=15)
     plt.yticks(fontsize=14)
     plt.tight_layout()
     plt.savefig('%s_diff_tol_MP_m_%s_n_%s_lambda_max_%s_%s_%s_%s.png' %
-               (title, m, n, lambda_max,
-                no_vars, region, function_type))
+                (title, m, n, lambda_max,
+                 no_vars, region, function_type))
 
 
 if __name__ == "__main__":
@@ -175,9 +175,9 @@ if __name__ == "__main__":
                                                region)
 
     (var_dir_elements_MP,
-    range_dir_elements_MP) = (compute_MP_diff_search_direction(
-                            noise_list, tol_list, cov, n, m, lambda_max,
-                            no_vars, f, region))
+     range_dir_elements_MP) = (compute_MP_diff_search_direction
+                               (noise_list, tol_list, cov, n, m, lambda_max,
+                                no_vars, f, region))
     title = 'var'
     create_boxplots_ratio_3(var_dir_elements_MP[0], var_dir_elements_MP[1],
                             var_dir_elements_MP[2], labels,
