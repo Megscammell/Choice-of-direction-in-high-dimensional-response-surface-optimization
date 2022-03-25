@@ -35,7 +35,7 @@ def test_1():
     assert(np.all(fp_func_vals > 0))
     assert(np.all(func_evals_step >= 0))
     assert(np.all(func_evals_dir > 0))
-    assert(np.all(time_taken > 0))
+    assert(np.all(time_taken >= 0))
     assert(np.all(no_its > 0))
     assert(np.where(fp_norms[0] == fp_norms[1])[0].shape[0] != num_funcs)
     assert(np.where(fp_func_vals[0] == fp_func_vals[1])[0].shape[0] !=
