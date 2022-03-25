@@ -110,5 +110,6 @@ The purpose of each line of code within the example is discussed in the followin
 Additional examples
 ---------------------
 
-Additional examples of the first phase of RSM with alternative search direction can be found at https://github.com/Megscammell/Estimate-of-direction-in-RSM/tree/main/Examples.
+Additional examples of the first phase of RSM with alternative search direction can be found 
+`here <https://github.com/Megscammell/Estimate-of-direction-in-RSM/tree/main/Examples>`_.
 All examples have an intuitive layout and structure, which can be easily followed. 

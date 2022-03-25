@@ -23,7 +23,7 @@ copyright = '2021, Megan Scammell'
 author = 'Megan Scammell'
 
 # The full version, including alpha/beta/rc tags
-release = '1.1'
+release = '1.2'
 
 
 # -- General configuration ---------------------------------------------------
